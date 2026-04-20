@@ -1,0 +1,20 @@
+build/
+*.log
+*.db
+*.sqlite
+**/*.db
+**/*.sqlite
+**/*.log
+config.lua
+**/config.lua
+node_modules/
+**/node_modules/
+*.zip
+*.rar
+*.pdb
+**/*.zip
+**/*.rar
+**/*.pdb
+server/data/world - Copia/
+server/data/world/* - bkp*.otbm
+client/data/things/1098/Tibia.spr

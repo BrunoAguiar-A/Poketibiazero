@@ -1,0 +1,147 @@
+================================================================================
+                    ✅ CORRIGIDO FINAL - TODOS OS ÍCONES
+================================================================================
+
+Corrigi todos os ícones para exibir corretamente!
+
+================================================================================
+O QUE FOI CORRIGIDO
+================================================================================
+
+A imagem icons.png tem 20×100 pixels com ícones dispostos VERTICALMENTE.
+
+Cada ícone ocupa 20 pixels de altura.
+
+ANTES (errado):
+  fly:       imageClip = "0 0 20 20"    ✓ Correto
+  teleport:  imageClip = "20 0 20 20"   ✗ Errado
+  cut:       imageClip = "0 0 0 20 20"  ✗ Errado
+  surf:      imageClip = "20 0 20 20"   ✗ Errado
+  dig:       imageClip = "0 0 20 20"    ✗ Errado
+
+DEPOIS (correto):
+  fly:       imageClip = "0 0 20 20"    ✓ Y = 0
+  teleport:  imageClip = "0 20 20 20"   ✓ Y = 20
+  cut:       imageClip = "0 40 20 20"   ✓ Y = 40
+  surf:      imageClip = "0 60 20 20"   ✓ Y = 60
+  dig:       imageClip = "0 80 20 20"   ✓ Y = 80
+
+================================================================================
+ESTRUTURA DA IMAGEM
+================================================================================
+
+A imagem tem 100 pixels de altura com 5 ícones:
+
+  ┌──────────┐
+  │ 0-20     │ ← Y = 0  (FLY)       imageClip = "0 0 20 20"
+  ├──────────┤
+  │ 20-40    │ ← Y = 20 (TELEPORT)  imageClip = "0 20 20 20"
+  ├──────────┤
+  │ 40-60    │ ← Y = 40 (CUT)       imageClip = "0 40 20 20"
+  ├──────────┤
+  │ 60-80    │ ← Y = 60 (SURF)      imageClip = "0 60 20 20"
+  ├──────────┤
+  │ 80-100   │ ← Y = 80 (DIG)       imageClip = "0 80 20 20"
+  └──────────┘
+
+PADRÃO:
+  • X é SEMPRE 0
+  • Y aumenta de 20 em 20: 0, 20, 40, 60, 80
+  • Largura é SEMPRE 20
+  • Altura é SEMPRE 20
+
+================================================================================
+CÓDIGO CORRIGIDO
+================================================================================
+
+local abilities = {
+  fly = {
+    tooltip = "Fly",
+    imageClip = "0 0 20 20",
+    callback = function()
+      g_game.getLocalPlayer():doUseSelfOrder()
+    end
+  },
+  teleport = {
+    tooltip = "Teleport",
+    imageClip = "0 20 20 20",
+    callback = function()
+      modules.game_minimap.toggleFullMap()
+    end
+  },
+  cut = {
+    tooltip = "Cut",
+    imageClip = "0 40 20 20",
+    callback = function()
+      g_game.talk("!cut")
+    end
+  },
+  surf = {
+    tooltip = "Surf",
+    imageClip = "0 60 20 20",
+    callback = function()
+      g_game.talk("!surf")
+    end
+  },
+  dig = {
+    tooltip = "Dig",
+    imageClip = "0 80 20 20",
+    callback = function()
+      g_game.talk("!dig")
+    end
+  }
+}
+
+================================================================================
+COMO TESTAR
+================================================================================
+
+1. Feche o cliente COMPLETAMENTE
+2. Aguarde 5 segundos
+3. Abra o cliente novamente
+4. Conecte ao servidor
+5. Verifique se os ícones aparecem corretamente:
+   • FLY: 1º ícone
+   • TELEPORT: 2º ícone
+   • CUT: 3º ícone
+   • SURF: 4º ícone
+   • DIG: 5º ícone
+
+================================================================================
+FÓRMULA PARA ADICIONAR MAIS ÍCONES
+================================================================================
+
+Se você quer adicionar mais ícones:
+
+1. Aumente a altura da imagem (de 100 para 120, por exemplo)
+2. Adicione o novo ícone na posição correta
+3. Adicione em pokebar.lua:
+
+  novaHabilidade = {
+    tooltip = "Nome",
+    imageClip = "0 100 20 20",    ← Y = 100 (próximo ícone)
+    callback = function()
+      g_game.talk("!comando")
+    end
+  }
+
+PADRÃO:
+  Y = (número do ícone - 1) × 20
+
+  Ícone 1: Y = 0
+  Ícone 2: Y = 20
+  Ícone 3: Y = 40
+  Ícone 4: Y = 60
+  Ícone 5: Y = 80
+  Ícone 6: Y = 100
+  Ícone 7: Y = 120
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.0.0
+Data: 14/03/2026
+Status: ✅ Todos os ícones corrigidos!
+
+================================================================================

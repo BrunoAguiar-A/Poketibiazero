@@ -1,0 +1,157 @@
+================================================================================
+                    CHECKLIST RÁPIDO - EDITAR ITENS
+================================================================================
+
+ANTES DE EDITAR:
+================================================================================
+
+□ Você sabe o ID do item que quer adicionar?
+□ Você sabe em qual dia quer adicionar?
+□ Você tem os arquivos abertos?
+
+================================================================================
+DURANTE A EDIÇÃO:
+================================================================================
+
+CLIENTE (game_daily_rewards.lua):
+────────────────────────────────────
+
+□ Abri o arquivo: game_daily_rewards.lua
+□ Localizei: local rewardsData = {
+□ Encontrei o dia que quero editar: [DIA] = {
+□ Alterei o clientId para o novo ID
+□ Alterei o count (quantidade) se necessário
+□ Alterei o name (nome) se necessário
+□ Verifiquei se não há erros de sintaxe
+□ Salvei o arquivo (Ctrl+S)
+
+SERVIDOR - Seção "refresh" (extendedopcode.lua):
+────────────────────────────────────────────────
+
+□ Abri o arquivo: extendedopcode.lua
+□ Localizei: if data.action == "refresh" then
+□ Localizei: local rewardsData = {
+□ Encontrei o dia que quero editar: [DIA] = {
+□ Alterei o itemId para o novo ID
+□ Alterei o count (quantidade) se necessário
+□ Alterei o name (nome) se necessário
+□ Verifiquei se não há erros de sintaxe
+□ Salvei o arquivo (Ctrl+S)
+
+SERVIDOR - Seção "claim" - Parte 1 (extendedopcode.lua):
+────────────────────────────────────────────────────
+
+□ Localizei: elseif data.action == "claim" then
+□ Localizei: local rewardsData = {
+□ Encontrei o dia que quero editar: [DIA] = {
+□ Alterei o itemId para o novo ID
+□ Alterei o count (quantidade) se necessário
+□ Verifiquei se não há erros de sintaxe
+□ Salvei o arquivo (Ctrl+S)
+
+SERVIDOR - Seção "claim" - Parte 2 (extendedopcode.lua):
+────────────────────────────────────────────────────
+
+□ Localizei: player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Recompensa coletada com sucesso!")
+□ Localizei: local rewardsDataResponse = {
+□ Encontrei o dia que quero editar: [DIA] = {
+□ Alterei o itemId para o novo ID
+□ Alterei o count (quantidade) se necessário
+□ Alterei o name (nome) se necessário
+□ Verifiquei se não há erros de sintaxe
+□ Salvei o arquivo (Ctrl+S)
+
+================================================================================
+APÓS A EDIÇÃO:
+================================================================================
+
+□ Verifiquei se os IDs são IGUAIS em todos os 4 lugares
+□ Verifiquei se não há erros de sintaxe (vírgulas, chaves)
+□ Salvei todos os arquivos
+□ Reiniciei o servidor
+□ Reiniciei o cliente
+□ Conectei ao servidor
+□ Cliquei no ícone de presente (gift)
+□ Verifiquei se o novo item aparece no dia correto
+□ Cliquei em "CLAIM REWARD"
+□ Verifiquei se o item NÃO mudou após clicar
+
+================================================================================
+SE ALGO DEU ERRADO:
+================================================================================
+
+□ Verifiquei se o ID é válido no jogo
+□ Verifiquei se não há erros de sintaxe
+□ Verifiquei se salvei todos os arquivos
+□ Verifiquei se os IDs são iguais em todos os 3 lugares
+□ Reiniciei o servidor e o cliente novamente
+□ Verifiquei o console para mensagens de erro
+
+================================================================================
+LOCAIS PARA EDITAR:
+================================================================================
+
+CLIENTE:
+  Arquivo: CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.lua
+  Linhas: 17-42
+  Procure: local rewardsData = {
+  Edite: clientId, count, name
+
+SERVIDOR (refresh):
+  Arquivo: SERVER/data/creaturescripts/scripts/extendedopcode.lua
+  Linhas: 261-290
+  Procure: if data.action == "refresh" then
+  Edite: itemId, count, name
+
+SERVIDOR (claim - Parte 1):
+  Arquivo: SERVER/data/creaturescripts/scripts/extendedopcode.lua
+  Linhas: 318-345
+  Procure: elseif data.action == "claim" then
+  Edite: itemId, count
+
+SERVIDOR (claim - Parte 2):
+  Arquivo: SERVER/data/creaturescripts/scripts/extendedopcode.lua
+  Linhas: 375-415
+  Procure: local rewardsDataResponse = {
+  Edite: itemId, count, name
+
+================================================================================
+ESTRUTURA DO ITEM:
+================================================================================
+
+CLIENTE:
+  [DIA] = {clientId = ID, count = QUANTIDADE, name = "NOME"}
+
+SERVIDOR (refresh):
+  [DIA] = {itemId = ID, count = QUANTIDADE, name = "NOME"}
+
+SERVIDOR (claim):
+  [DIA] = {itemId = ID, count = QUANTIDADE}
+
+================================================================================
+EXEMPLO RÁPIDO:
+================================================================================
+
+Mudar Dia 1 de "Leaf Stone" (26731) para "Poção Vermelha" (12345):
+
+CLIENTE:
+  [1] = {clientId = 12345, count = 1, name = "Poção Vermelha"},
+
+SERVIDOR (refresh):
+  [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"},
+
+SERVIDOR (claim - Parte 1):
+  [1] = {itemId = 12345, count = 1},
+
+SERVIDOR (claim - Parte 2):
+  [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"},
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.4.0
+Data: 14/03/2026
+Status: ✅ Checklist pronto
+
+================================================================================

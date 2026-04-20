@@ -1,0 +1,148 @@
+================================================================================
+                    TESTE O MÓDULO DAILY REWARDS AGORA
+================================================================================
+
+PASSO 1: REINICIAR O CLIENTE
+================================================================================
+
+1. Feche o cliente completamente
+2. Aguarde 5 segundos
+3. Abra o cliente novamente
+4. Conecte ao servidor
+
+PASSO 2: VERIFICAR SE O MÓDULO CARREGOU
+================================================================================
+
+1. Abra o console do cliente (geralmente Ctrl+Shift+C ou F12)
+2. Procure por esta mensagem:
+   ">> Módulo de Daily Rewards carregado com sucesso!"
+
+Se vir esta mensagem, o módulo foi carregado corretamente.
+
+PASSO 3: PROCURAR O BOTÃO NO TOPMENU
+================================================================================
+
+1. Olhe para o topo da tela (onde estão os botões de menu)
+2. Procure por um ícone de presente (gift icon)
+3. Este é o botão "Daily Rewards"
+
+Se não vir o botão, vá para PASSO 4.
+
+PASSO 4: ABRIR MANUALMENTE (Se o botão não aparecer)
+================================================================================
+
+1. Abra o console do cliente
+2. Digite e execute:
+   modules.game_daily_rewards.show()
+
+3. A janela de Daily Rewards deve abrir
+
+PASSO 5: TESTAR A JANELA
+================================================================================
+
+Se a janela abriu, você verá:
+- Título: "RECOMPENSAS DIARIAS - 21 DIAS"
+- 21 caixas de recompensas (7 colunas x 3 linhas)
+- Botões: "CLAIM REWARD" e "CLOSE"
+
+Clique em "CLOSE" para fechar a janela.
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+PROBLEMA 1: Módulo não carregou
+Solução:
+  1. Verifique se todos os arquivos estão em:
+     CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/
+  2. Verifique se o arquivo game_daily_rewards.otui existe
+  3. Reinicie o cliente
+
+PROBLEMA 2: Botão não aparece no topmenu
+Solução:
+  1. Verifique se o ícone existe em:
+     CLIENT/OTCLIENT NORDEMON/data/images/topbuttons/daily_rewards.png
+  2. Abra manualmente: modules.game_daily_rewards.show()
+  3. Se a janela abrir, o problema é apenas com o botão
+
+PROBLEMA 3: Janela não abre
+Solução:
+  1. Abra o console
+  2. Execute: print(modules.game_daily_rewards)
+  3. Se retornar nil, o módulo não foi carregado
+  4. Se retornar uma tabela, o módulo foi carregado
+  5. Execute: modules.game_daily_rewards.show()
+  6. Se der erro, verifique o console para mensagens de erro
+
+PROBLEMA 4: Erro ao carregar OTUI
+Solução:
+  1. Verifique se o arquivo game_daily_rewards.otui está correto
+  2. Procure por erros de sintaxe
+  3. Verifique se não há widgets inválidos
+
+================================================================================
+CONSOLE COMMANDS
+================================================================================
+
+Abrir a janela:
+  modules.game_daily_rewards.show()
+
+Fechar a janela:
+  modules.game_daily_rewards.hide()
+
+Alternar visibilidade:
+  modules.game_daily_rewards.toggleWindow()
+
+Coletar recompensa:
+  modules.game_daily_rewards.claimReward()
+
+Atualizar dados:
+  modules.game_daily_rewards.requestRewardsData()
+
+Verificar se módulo está carregado:
+  print(modules.game_daily_rewards)
+
+Verificar se janela foi criada:
+  print(modules.game_daily_rewards.mainWindow)
+
+Verificar se botão foi criado:
+  print(modules.game_daily_rewards.buttonRewards)
+
+================================================================================
+PRÓXIMOS PASSOS
+================================================================================
+
+Se o módulo está funcionando:
+
+1. Integrar com o servidor
+   → Leia: SERVER_INTEGRATION.md
+
+2. Configurar recompensas
+   → Defina os itens para cada dia
+
+3. Testar integração completa
+   → Teste o fluxo completo
+
+4. Deploy em produção
+   → Copie para o servidor de produção
+
+================================================================================
+SUPORTE
+================================================================================
+
+Se ainda tiver problemas:
+
+1. Leia: DEBUG.md (Guia de debug)
+2. Leia: QUICK_START.md (Início rápido)
+3. Leia: README.md (Visão geral)
+4. Visite: https://nordemon.online/forum
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.1.0
+Data: 13/03/2026
+Status: ✅ Pronto para teste
+
+================================================================================

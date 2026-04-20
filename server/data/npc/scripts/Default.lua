@@ -1,0 +1,1 @@
+/root/SERVER/data/npc/scripts/default.lua

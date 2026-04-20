@@ -1,0 +1,222 @@
+================================================================================
+                    EXEMPLO VISUAL DE EDIÇÃO
+================================================================================
+
+ARQUIVO: CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.lua
+
+LINHAS: 18 a 42
+
+================================================================================
+SEÇÃO ATUAL (LINHAS 18-42)
+================================================================================
+
+18 | -- Dados das recompensas (21 dias) - Itens padrão para preview
+19 | local rewardsData = {
+20 |     [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+21 |     [2] = {clientId = 26728, count = 1, name = "Fire Stone"},
+22 |     [3] = {clientId = 26736, count = 1, name = "Water Stone"},
+23 |     [4] = {clientId = 26734, count = 1, name = "Thunder Stone"},
+24 |     [5] = {clientId = 2152, count = 5, name = "Hundred Dollar"},
+25 |     [6] = {clientId = 27643, count = 3, name = "Great Potion"},
+26 |     [7] = {clientId = 26748, count = 1, name = "Sun Stone"},
+27 |     [8] = {clientId = 38787, count = 2, name = "Rare Candy"},
+28 |     [9] = {clientId = 2160, count = 1, name = "Ten Thousand Dollar"},
+29 |     [10] = {clientId = 27641, count = 2, name = "Ultra Potion"},
+30 |     [11] = {clientId = 26731, count = 2, name = "Leaf Stone"},
+31 |     [12] = {clientId = 27645, count = 3, name = "Revive"},
+32 |     [13] = {clientId = 2152, count = 10, name = "Hundred Dollar"},
+33 |     [14] = {clientId = 26728, count = 2, name = "Fire Stone"},
+34 |     [15] = {clientId = 38787, count = 3, name = "Rare Candy"},
+35 |     [16] = {clientId = 26736, count = 2, name = "Water Stone"},
+36 |     [17] = {clientId = 2160, count = 2, name = "Ten Thousand Dollar"},
+37 |     [18] = {clientId = 27647, count = 5, name = "Hyper Potion"},
+38 |     [19] = {clientId = 26734, count = 2, name = "Thunder Stone"},
+39 |     [20] = {clientId = 38787, count = 5, name = "Rare Candy"},
+40 |     [21] = {clientId = 2160, count = 10, name = "Ten Thousand Dollar"}
+41 | }
+
+================================================================================
+EXEMPLO 1: MUDAR O ITEM DO DIA 1
+================================================================================
+
+ANTES (Linha 20):
+    [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+
+DEPOIS (Exemplo - Mudar para Poção Vermelha):
+    [1] = {clientId = 12345, count = 1, name = "Poção Vermelha"},
+
+O QUE MUDOU:
+  • clientId: 26731 → 12345 (ID do novo item)
+  • name: "Leaf Stone" → "Poção Vermelha" (nome do novo item)
+  • count: 1 (mantém igual)
+
+================================================================================
+EXEMPLO 2: AUMENTAR QUANTIDADE DO DIA 5
+================================================================================
+
+ANTES (Linha 24):
+    [5] = {clientId = 2152, count = 5, name = "Hundred Dollar"},
+
+DEPOIS (Aumentar para 10):
+    [5] = {clientId = 2152, count = 10, name = "Hundred Dollar"},
+
+O QUE MUDOU:
+  • count: 5 → 10 (quantidade aumentada)
+  • clientId: 2152 (mantém igual)
+  • name: "Hundred Dollar" (mantém igual)
+
+================================================================================
+EXEMPLO 3: MUDAR VÁRIOS ITENS
+================================================================================
+
+ANTES:
+    [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+    [2] = {clientId = 26728, count = 1, name = "Fire Stone"},
+    [3] = {clientId = 26736, count = 1, name = "Water Stone"},
+
+DEPOIS (Exemplo - Mudar para itens diferentes):
+    [1] = {clientId = 99999, count = 2, name = "Item Especial 1"},
+    [2] = {clientId = 88888, count = 3, name = "Item Especial 2"},
+    [3] = {clientId = 77777, count = 1, name = "Item Especial 3"},
+
+O QUE MUDOU:
+  • Todos os clientIds foram alterados
+  • Todos os names foram alterados
+  • Alguns counts foram alterados
+
+================================================================================
+PASSO A PASSO PARA EDITAR
+================================================================================
+
+1. ABRIR O ARQUIVO
+   ├─ Caminho: CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/
+   ├─ Arquivo: game_daily_rewards.lua
+   └─ Abra com seu editor de texto favorito
+
+2. PROCURAR A SEÇÃO
+   ├─ Procure por: "local rewardsData = {"
+   ├─ Você verá a tabela com 21 itens
+   └─ Linhas 18-42
+
+3. EDITAR OS ITENS
+   ├─ Escolha qual dia quer editar
+   ├─ Mude o clientId (ID do item)
+   ├─ Mude o count (quantidade)
+   ├─ Mude o name (nome do item)
+   └─ Mantenha a estrutura igual
+
+4. SALVAR O ARQUIVO
+   ├─ Pressione Ctrl+S
+   ├─ Ou use File → Save
+   └─ Verifique se foi salvo
+
+5. REINICIAR O CLIENTE
+   ├─ Feche o cliente completamente
+   ├─ Aguarde 5 segundos
+   ├─ Abra o cliente novamente
+   └─ Conecte ao servidor
+
+6. TESTAR
+   ├─ Abra a janela de Daily Rewards
+   ├─ Verifique se os itens mudaram
+   ├─ Clique no botão de presente no topmenu
+   └─ Ou execute: modules.game_daily_rewards.show()
+
+================================================================================
+ESTRUTURA DE CADA LINHA
+================================================================================
+
+[DIA] = {clientId = ID, count = QUANTIDADE, name = "NOME"},
+ ↑                ↑                ↑                    ↑
+ |                |                |                    |
+ |                |                |                    └─ Nome do item
+ |                |                └─ Quantidade do item
+ |                └─ ID do item no cliente
+ └─ Número do dia (1 a 21)
+
+EXEMPLO:
+[5] = {clientId = 2152, count = 10, name = "Hundred Dollar"},
+ ↑                ↑                ↑                    ↑
+ |                |                |                    |
+ |                |                |                    └─ "Hundred Dollar"
+ |                |                └─ 10 unidades
+ |                └─ ID 2152
+ └─ Dia 5
+
+================================================================================
+DICAS IMPORTANTES
+================================================================================
+
+✓ FAÇA:
+  • Mantenha a estrutura igual
+  • Use vírgulas no final de cada linha
+  • Salve o arquivo após editar
+  • Reinicie o cliente para ver as mudanças
+  • Teste cada mudança
+
+✗ NÃO FAÇA:
+  • Não remova linhas (deve haver 21 itens)
+  • Não mude o formato da estrutura
+  • Não esqueça de salvar
+  • Não esqueça de reiniciar o cliente
+  • Não use caracteres especiais no name
+
+================================================================================
+VERIFICAÇÃO RÁPIDA
+================================================================================
+
+Após editar, verifique:
+
+1. Há exatamente 21 itens? (de [1] a [21])
+   ✓ Sim → OK
+   ✗ Não → Adicione ou remova linhas
+
+2. Cada linha tem vírgula no final? (exceto a última)
+   ✓ Sim → OK
+   ✗ Não → Adicione vírgulas
+
+3. Cada item tem clientId, count e name?
+   ✓ Sim → OK
+   ✗ Não → Adicione os campos faltantes
+
+4. O arquivo foi salvo?
+   ✓ Sim → OK
+   ✗ Não → Salve agora
+
+5. O cliente foi reiniciado?
+   ✓ Sim → OK
+   ✗ Não → Reinicie agora
+
+================================================================================
+PRÓXIMOS PASSOS
+================================================================================
+
+Após editar os itens no cliente:
+
+1. Teste no cliente
+   └─ Abra a janela e verifique se os itens aparecem
+
+2. Integre com o servidor
+   └─ Leia: SERVER_INTEGRATION.md
+
+3. Configure no servidor
+   └─ Implemente o handler do protocolo
+
+4. Teste a integração completa
+   └─ Teste o fluxo completo
+
+5. Deploy em produção
+   └─ Copie para o servidor de produção
+
+================================================================================
+SUPORTE
+================================================================================
+
+Se tiver dúvidas:
+
+1. Leia: EDITAR_ITENS.md (guia completo)
+2. Leia: SERVER_INTEGRATION.md (integração com servidor)
+3. Leia: USAGE_EXAMPLES.md (exemplos)
+4. Visite: https://nordemon.online/forum
+
+================================================================================

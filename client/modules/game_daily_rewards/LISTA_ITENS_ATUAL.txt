@@ -1,0 +1,72 @@
+================================================================================
+                    LISTA DE ITENS - DAILY REWARDS
+================================================================================
+
+RECOMPENSAS CONFIGURADAS (21 DIAS)
+
+Dia 1:  clientId = 2152   | count = 1  | Hundred Dollar
+Dia 2:  clientId = 2160   | count = 1  | Ten Thousand Dollar
+Dia 3:  clientId = 14435  | count = 1  | Item 1
+Dia 4:  clientId = 14434  | count = 1  | Item 2
+Dia 5:  clientId = 13198  | count = 1  | Item 3
+Dia 6:  clientId = 13234  | count = 1  | Item 4
+Dia 7:  clientId = 12237  | count = 1  | Item 5
+Dia 8:  clientId = 13559  | count = 1  | Item 6
+Dia 9:  clientId = 13560  | count = 1  | Item 7
+Dia 10: clientId = 13561  | count = 1  | Item 8
+Dia 11: clientId = 13563  | count = 1  | Item 9
+Dia 12: clientId = 13564  | count = 1  | Item 10
+Dia 13: clientId = 13565  | count = 1  | Item 11
+Dia 14: clientId = 17315  | count = 1  | Item 12
+Dia 15: clientId = 20652  | count = 1  | Item 13
+Dia 16: clientId = 20651  | count = 1  | Item 14
+Dia 17: clientId = 17208  | count = 1  | Item 15
+Dia 18: clientId = 17120  | count = 1  | Item 16
+Dia 19: clientId = 2152   | count = 5  | Hundred Dollar x5
+Dia 20: clientId = 2160   | count = 5  | Ten Thousand Dollar x5
+Dia 21: clientId = 14435  | count = 10 | Item 1 x10
+
+================================================================================
+COMO EDITAR OS ITENS
+================================================================================
+
+1. Abra o arquivo:
+   CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.lua
+
+2. Localize a seção:
+   local rewardsData = {
+
+3. Altere os valores de clientId e count conforme necessário
+
+4. Salve o arquivo
+
+5. Reinicie o cliente
+
+================================================================================
+EXEMPLO DE EDIÇÃO
+================================================================================
+
+Para alterar o Dia 1 de "Hundred Dollar" para outro item:
+
+ANTES:
+    [1] = {clientId = 2152, count = 1, name = "Hundred Dollar"},
+
+DEPOIS (exemplo):
+    [1] = {clientId = 3031, count = 1, name = "Meu Item"},
+
+Onde:
+- clientId = ID do item no cliente
+- count = quantidade
+- name = nome descritivo (apenas para referência)
+
+================================================================================
+NOTAS IMPORTANTES
+================================================================================
+
+1. Os clientIds devem ser válidos no cliente
+2. A quantidade (count) deve ser um número inteiro positivo
+3. O nome (name) é apenas para referência, não afeta o jogo
+4. Máximo de 21 dias (não altere o número de itens)
+5. Após editar, reinicie o cliente para aplicar as mudanças
+
+================================================================================

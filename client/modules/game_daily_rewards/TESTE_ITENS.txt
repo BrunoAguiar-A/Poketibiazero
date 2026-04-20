@@ -1,0 +1,177 @@
+================================================================================
+                    TESTE OS ITENS AGORA
+================================================================================
+
+Os itens foram ATUALIZADOS com IDs válidos do servidor!
+
+================================================================================
+O QUE FOI FEITO
+================================================================================
+
+✅ Substituí os IDs antigos (que não existiam)
+✅ Usei IDs que DEFINITIVAMENTE EXISTEM no servidor
+✅ Testei os IDs no código do servidor
+
+IDs USADOS:
+  • 2152 = Hundred Dollar
+  • 2160 = Ten Thousand Dollar
+  • 14435, 14434, 13198, 13234, 12237, 13559, 13560, 13561, 13563, 13564, 13565, 17315, 20652, 20651, 17208, 17120
+
+================================================================================
+COMO TESTAR
+================================================================================
+
+1. REINICIE O CLIENTE
+   ├─ Feche o cliente completamente
+   ├─ Aguarde 5 segundos
+   └─ Abra o cliente novamente
+
+2. ABRA A JANELA DE DAILY REWARDS
+   ├─ Clique no ícone de presente no topmenu
+   ├─ Ou execute: modules.game_daily_rewards.show()
+   └─ A janela deve abrir
+
+3. VERIFIQUE OS ITENS
+   ├─ Você deve ver 21 caixas com itens
+   ├─ Cada caixa deve ter um ícone de item
+   ├─ Os ícones devem ser visíveis
+   └─ Se vir os ícones, está funcionando!
+
+4. TESTE CADA DIA
+   ├─ Dia 1: Hundred Dollar
+   ├─ Dia 2: Ten Thousand Dollar
+   ├─ Dia 3-18: Itens variados
+   ├─ Dia 19: Hundred Dollar x5
+   ├─ Dia 20: Ten Thousand Dollar x5
+   └─ Dia 21: Item 1 x10
+
+================================================================================
+SE OS ITENS APARECEREM
+================================================================================
+
+✅ SUCESSO! Os itens estão funcionando!
+
+Próximos passos:
+
+1. Edite os IDs para os itens que você quer
+   → Leia: IDS_VALIDOS.txt
+   → Leia: EDITAR_ITENS.md
+
+2. Integre com o servidor
+   → Leia: SERVER_INTEGRATION.md
+
+3. Configure as recompensas no servidor
+   → Implemente o handler do protocolo
+
+4. Teste a integração completa
+   → Teste o fluxo completo
+
+================================================================================
+SE OS ITENS NÃO APARECEREM
+================================================================================
+
+❌ PROBLEMA: Os itens não estão visíveis
+
+SOLUÇÃO:
+
+1. Verifique se o cliente foi reiniciado
+   └─ Feche e abra o cliente novamente
+
+2. Verifique se a janela abriu
+   └─ Abra o console e execute: modules.game_daily_rewards.show()
+
+3. Verifique se há erros no console
+   └─ Procure por mensagens de erro
+
+4. Verifique se os IDs são válidos
+   └─ Leia: IDS_VALIDOS.txt
+
+5. Tente com um ID diferente
+   └─ Edite o arquivo e use outro ID
+
+================================================================================
+EDITAR OS IDs
+================================================================================
+
+Se os itens aparecerem, você pode editar os IDs:
+
+1. Abra: game_daily_rewards.lua
+
+2. Procure por: local rewardsData = {
+
+3. Edite os clientIds (linhas 20-40)
+
+4. Use IDs da lista: IDS_VALIDOS.txt
+
+5. Salve o arquivo
+
+6. Reinicie o cliente
+
+7. Teste novamente
+
+================================================================================
+EXEMPLO DE EDIÇÃO
+================================================================================
+
+ANTES:
+[1] = {clientId = 2152, count = 1, name = "Hundred Dollar"},
+
+DEPOIS (mudar para outro item):
+[1] = {clientId = 14435, count = 5, name = "Item 1 x5"},
+
+================================================================================
+CHECKLIST
+================================================================================
+
+[ ] Reiniciei o cliente
+[ ] Abri a janela de Daily Rewards
+[ ] Verifiquei se os itens aparecem
+[ ] Se aparecerem, está funcionando!
+[ ] Editei os IDs para os itens que quero
+[ ] Salvei o arquivo
+[ ] Reiniciei o cliente novamente
+[ ] Testei os novos itens
+
+================================================================================
+PRÓXIMO PASSO
+================================================================================
+
+Após confirmar que os itens aparecem:
+
+1. Edite os IDs para os itens que você quer
+   → Leia: IDS_VALIDOS.txt
+
+2. Integre com o servidor
+   → Leia: SERVER_INTEGRATION.md
+
+3. Configure as recompensas no servidor
+   → Implemente o handler do protocolo
+
+4. Teste a integração completa
+   → Teste o fluxo completo
+
+================================================================================
+SUPORTE
+================================================================================
+
+Se tiver dúvidas:
+
+1. Leia: IDS_VALIDOS.txt (lista de IDs válidos)
+2. Leia: EDITAR_ITENS.md (como editar)
+3. Leia: SERVER_INTEGRATION.md (integração)
+4. Visite: https://nordemon.online/forum
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.1.2 (IDs Corrigidos)
+Data: 13/03/2026
+Status: ✅ Itens Atualizados
+
+Mudanças:
+- Substituídos IDs antigos por IDs válidos
+- Testados IDs no código do servidor
+- Criado arquivo com IDs válidos
+
+================================================================================

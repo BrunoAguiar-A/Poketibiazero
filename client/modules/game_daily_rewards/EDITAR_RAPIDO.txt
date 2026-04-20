@@ -1,0 +1,99 @@
+================================================================================
+                    EDITAR ITENS - GUIA RÁPIDO
+================================================================================
+
+ARQUIVO: CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.lua
+LINHAS: 20-40
+
+================================================================================
+FORMATO
+================================================================================
+
+[DIA] = {clientId = ID, count = QUANTIDADE, name = "NOME"},
+
+Exemplo:
+[1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+
+================================================================================
+EDITAR UM ITEM
+================================================================================
+
+1. Abra o arquivo game_daily_rewards.lua
+2. Procure por: local rewardsData = {
+3. Encontre o dia que quer editar
+4. Mude: clientId, count, name
+5. Salve (Ctrl+S)
+6. Reinicie o cliente
+
+================================================================================
+EXEMPLO DE EDIÇÃO
+================================================================================
+
+ANTES:
+[1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+
+DEPOIS:
+[1] = {clientId = 12345, count = 2, name = "Meu Item"},
+
+================================================================================
+LISTA ATUAL (21 DIAS)
+================================================================================
+
+Dia 1:  Leaf Stone (ID: 26731, Qtd: 1)
+Dia 2:  Fire Stone (ID: 26728, Qtd: 1)
+Dia 3:  Water Stone (ID: 26736, Qtd: 1)
+Dia 4:  Thunder Stone (ID: 26734, Qtd: 1)
+Dia 5:  Hundred Dollar (ID: 2152, Qtd: 5)
+Dia 6:  Great Potion (ID: 27643, Qtd: 3)
+Dia 7:  Sun Stone (ID: 26748, Qtd: 1)
+Dia 8:  Rare Candy (ID: 38787, Qtd: 2)
+Dia 9:  Ten Thousand Dollar (ID: 2160, Qtd: 1)
+Dia 10: Ultra Potion (ID: 27641, Qtd: 2)
+Dia 11: Leaf Stone (ID: 26731, Qtd: 2)
+Dia 12: Revive (ID: 27645, Qtd: 3)
+Dia 13: Hundred Dollar (ID: 2152, Qtd: 10)
+Dia 14: Fire Stone (ID: 26728, Qtd: 2)
+Dia 15: Rare Candy (ID: 38787, Qtd: 3)
+Dia 16: Water Stone (ID: 26736, Qtd: 2)
+Dia 17: Ten Thousand Dollar (ID: 2160, Qtd: 2)
+Dia 18: Hyper Potion (ID: 27647, Qtd: 5)
+Dia 19: Thunder Stone (ID: 26734, Qtd: 2)
+Dia 20: Rare Candy (ID: 38787, Qtd: 5)
+Dia 21: Ten Thousand Dollar (ID: 2160, Qtd: 10)
+
+================================================================================
+IDs COMUNS
+================================================================================
+
+2152 = Hundred Dollar
+2160 = Ten Thousand Dollar
+26728 = Fire Stone
+26731 = Leaf Stone
+26734 = Thunder Stone
+26736 = Water Stone
+26748 = Sun Stone
+27641 = Ultra Potion
+27643 = Great Potion
+27645 = Revive
+27647 = Hyper Potion
+38787 = Rare Candy
+
+================================================================================
+CHECKLIST
+================================================================================
+
+[ ] Abri o arquivo game_daily_rewards.lua
+[ ] Encontrei a seção rewardsData
+[ ] Editei os itens
+[ ] Salvei o arquivo
+[ ] Reiniciei o cliente
+[ ] Testei a janela
+
+================================================================================
+PRÓXIMO PASSO
+================================================================================
+
+Integrar com o servidor:
+→ Leia: SERVER_INTEGRATION.md
+
+================================================================================

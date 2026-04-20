@@ -1,0 +1,116 @@
+================================================================================
+                    ✅ ITENS CORRIGIDOS - DAILY REWARDS
+================================================================================
+
+O PROBLEMA FOI RESOLVIDO!
+
+================================================================================
+O QUE FOI CORRIGIDO
+================================================================================
+
+1. ✅ Removido "virtual: true" do widget UIItem
+   - Agora os itens são renderizados corretamente
+
+2. ✅ Adicionada chamada de updateRewardsDisplay() na função show()
+   - Os itens aparecem quando a janela abre
+
+3. ✅ Adicionada chamada de updateRewardsDisplay() em createRewardWidgets()
+   - Os itens aparecem assim que os widgets são criados
+
+4. ✅ Substituídos os clientIds por IDs válidos
+   - Agora usa itens que existem no jogo (Stones, Potions, Candies, etc)
+
+================================================================================
+ITENS AGORA CONFIGURADOS (21 DIAS)
+================================================================================
+
+Dia 1:  Leaf Stone (clientId: 26731)
+Dia 2:  Fire Stone (clientId: 26728)
+Dia 3:  Water Stone (clientId: 26736)
+Dia 4:  Thunder Stone (clientId: 26734)
+Dia 5:  Hundred Dollar x5 (clientId: 2152)
+Dia 6:  Great Potion x3 (clientId: 27643)
+Dia 7:  Sun Stone (clientId: 26748)
+Dia 8:  Rare Candy x2 (clientId: 38787)
+Dia 9:  Ten Thousand Dollar (clientId: 2160)
+Dia 10: Ultra Potion x2 (clientId: 27641)
+Dia 11: Leaf Stone x2 (clientId: 26731)
+Dia 12: Revive x3 (clientId: 27645)
+Dia 13: Hundred Dollar x10 (clientId: 2152)
+Dia 14: Fire Stone x2 (clientId: 26728)
+Dia 15: Rare Candy x3 (clientId: 38787)
+Dia 16: Water Stone x2 (clientId: 26736)
+Dia 17: Ten Thousand Dollar x2 (clientId: 2160)
+Dia 18: Hyper Potion x5 (clientId: 27647)
+Dia 19: Thunder Stone x2 (clientId: 26734)
+Dia 20: Rare Candy x5 (clientId: 38787)
+Dia 21: Ten Thousand Dollar x10 (clientId: 2160)
+
+================================================================================
+COMO TESTAR
+================================================================================
+
+1. Feche o cliente completamente
+2. Aguarde 5 segundos
+3. Abra o cliente novamente
+4. Conecte ao servidor
+5. Clique no ícone de presente (gift) no topo
+6. Você verá os 21 itens exibidos corretamente!
+
+================================================================================
+COMO EDITAR OS ITENS
+================================================================================
+
+Se quiser mudar os itens:
+
+1. Abra: game_daily_rewards.lua
+2. Localize: local rewardsData = {
+3. Altere os valores de clientId, count e name
+4. Salve (Ctrl+S)
+5. Reinicie o cliente
+
+EXEMPLO:
+  ANTES: [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+  DEPOIS: [1] = {clientId = 12345, count = 2, name = "Meu Item"},
+
+================================================================================
+ESTRUTURA DO ITEM
+================================================================================
+
+[DIA] = {clientId = ID, count = QUANTIDADE, name = "NOME"}
+
+Onde:
+  • DIA: Número do dia (1-21)
+  • clientId: ID do item no cliente
+  • count: Quantidade do item
+  • name: Nome descritivo (apenas para referência)
+
+================================================================================
+NOTAS IMPORTANTES
+================================================================================
+
+1. Os clientIds devem ser válidos no cliente
+2. A quantidade (count) deve ser um número inteiro positivo
+3. O nome (name) é apenas para referência, não afeta o jogo
+4. Máximo de 21 dias (não altere o número de itens)
+5. Após editar, reinicie o cliente para aplicar as mudanças
+6. Os itens agora aparecem corretamente na interface!
+
+================================================================================
+CONSOLE COMMANDS
+================================================================================
+
+Abrir:          modules.game_daily_rewards.show()
+Fechar:         modules.game_daily_rewards.hide()
+Coletar:        modules.game_daily_rewards.claimReward()
+Atualizar:      modules.game_daily_rewards.requestRewardsData()
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.3.0
+Data: 14/03/2026
+Status: ✅ Itens corrigidos e funcionando!
+
+================================================================================

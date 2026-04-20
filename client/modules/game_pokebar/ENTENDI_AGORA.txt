@@ -1,0 +1,135 @@
+================================================================================
+                    ✅ AGORA ENTENDI! - EXEMPLO PRÁTICO
+================================================================================
+
+Vou mostrar exatamente como funciona com os 3 primeiros ícones.
+
+================================================================================
+A IMAGEM
+================================================================================
+
+A imagem icons.png tem 100 pixels de largura com 5 ícones:
+
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+  │ ÍCONE 1  │ ÍCONE 2  │ ÍCONE 3  │ ÍCONE 4  │ ÍCONE 5  │
+  └──────────┴──────────┴──────────┴──────────┴──────────┘
+  0         20        40        60        80       100
+
+================================================================================
+OS 3 PRIMEIROS ÍCONES
+================================================================================
+
+ÍCONE 1 - FLY (Pixels 0-20)
+──────────────────────────
+
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+  │██████████│          │          │          │          │
+  └──────────┴──────────┴──────────┴──────────┴──────────┘
+  0         20        40        60        80       100
+
+Código em pokebar.lua:
+  fly = {
+    tooltip = "Fly",
+    imageClip = "0 0 20 20",    ← Começa em pixel 0
+    callback = function() ... end
+  }
+
+Explicação:
+  • X = 0 (começa no pixel 0)
+  • Y = 0 (começa no topo)
+  • Pega 20 pixels de largura
+  • Pega 20 pixels de altura
+
+────────────────────────────────────────────────────────────
+
+ÍCONE 2 - TELEPORT (Pixels 20-40)
+──────────────────────────────────
+
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+  │          │██████████│          │          │          │
+  └──────────┴──────────┴──────────┴──────────┴──────────┘
+  0         20        40        60        80       100
+
+Código em pokebar.lua:
+  teleport = {
+    tooltip = "Teleport",
+    imageClip = "20 0 20 20",   ← Começa em pixel 20
+    callback = function() ... end
+  }
+
+Explicação:
+  • X = 20 (começa no pixel 20)
+  • Y = 0 (começa no topo)
+  • Pega 20 pixels de largura
+  • Pega 20 pixels de altura
+
+────────────────────────────────────────────────────────────
+
+ÍCONE 3 - CUT (Pixels 40-60)
+────────────────────────────
+
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+  │          │          │██████████│          │          │
+  └──────────┴──────────┴──────────┴──────────┴──────────┘
+  0         20        40        60        80       100
+
+Código em pokebar.lua (CORRIGIDO):
+  cut = {
+    tooltip = "Cut",
+    imageClip = "40 0 20 20",   ← Começa em pixel 40
+    callback = function()
+      g_game.talk("!cut")
+    end
+  }
+
+Explicação:
+  • X = 40 (começa no pixel 40)
+  • Y = 0 (começa no topo)
+  • Pega 20 pixels de largura
+  • Pega 20 pixels de altura
+
+================================================================================
+O PADRÃO
+================================================================================
+
+Vendo os 3 primeiros:
+
+  FLY:      imageClip = "0 0 20 20"    ← Começa em 0
+  TELEPORT: imageClip = "20 0 20 20"   ← Começa em 20
+  CUT:      imageClip = "40 0 20 20"   ← Começa em 40
+
+PADRÃO:
+  • Cada ícone começa 20 pixels depois do anterior
+  • Y é SEMPRE 0
+  • Largura e altura são SEMPRE 20
+
+PRÓXIMOS ÍCONES:
+  SURF:     imageClip = "60 0 20 20"   ← Começa em 60
+  DIG:      imageClip = "80 0 20 20"   ← Começa em 80
+
+================================================================================
+RESUMO SUPER SIMPLES
+================================================================================
+
+A imagem tem 100 pixels de largura.
+
+Cada ícone ocupa 20 pixels.
+
+Então:
+  • 1º ícone: pixels 0-20   → imageClip = "0 0 20 20"
+  • 2º ícone: pixels 20-40  → imageClip = "20 0 20 20"
+  • 3º ícone: pixels 40-60  → imageClip = "40 0 20 20"
+  • 4º ícone: pixels 60-80  → imageClip = "60 0 20 20"
+  • 5º ícone: pixels 80-100 → imageClip = "80 0 20 20"
+
+É SÓ ISSO!
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.0.0
+Data: 14/03/2026
+Status: ✅ Agora ficou claro!
+
+================================================================================

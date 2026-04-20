@@ -1,0 +1,152 @@
+================================================================================
+                    ✅ DAILY REWARDS - FINAL COMPLETO
+================================================================================
+
+TODOS OS PROBLEMAS FORAM RESOLVIDOS!
+
+================================================================================
+RESUMO DO QUE FOI CORRIGIDO
+================================================================================
+
+1. ✅ Itens não apareciam
+   → Removido "virtual: true" do widget UIItem
+   → Adicionadas chamadas de updateRewardsDisplay()
+
+2. ✅ Itens exibiam valores errados
+   → Substituídos IDs inválidos por IDs válidos
+   → Cliente agora processa dados do servidor corretamente
+
+3. ✅ Itens mudavam após clicar em "CLAIM REWARD"
+   → Servidor agora envia dados corretos após claim
+   → Adicionada seção "claim - Parte 2" com IDs corretos
+
+================================================================================
+COMO USAR AGORA
+================================================================================
+
+1. Reinicie o servidor
+2. Reinicie o cliente
+3. Conecte ao servidor
+4. Clique no ícone de presente (gift) no topo
+5. Você verá os 21 itens corretos!
+6. Clique em "CLAIM REWARD" para coletar
+7. Os itens NÃO mudarão mais!
+
+================================================================================
+ONDE EDITAR OS ITENS (4 LUGARES!)
+================================================================================
+
+CLIENTE (Exibição):
+  Arquivo: game_daily_rewards.lua
+  Linhas: 17-42
+  Procure: local rewardsData = {
+  Edite: clientId, count, name
+
+SERVIDOR (Envio de dados - refresh):
+  Arquivo: extendedopcode.lua
+  Linhas: 261-290
+  Procure: if data.action == "refresh" then
+  Edite: itemId, count, name
+
+SERVIDOR (Entrega do item - claim Parte 1):
+  Arquivo: extendedopcode.lua
+  Linhas: 318-345
+  Procure: elseif data.action == "claim" then
+  Edite: itemId, count
+
+SERVIDOR (Resposta após claim - claim Parte 2):
+  Arquivo: extendedopcode.lua
+  Linhas: 375-415
+  Procure: local rewardsDataResponse = {
+  Edite: itemId, count, name
+
+================================================================================
+ESTRUTURA DO ITEM
+================================================================================
+
+CLIENTE:
+  [DIA] = {clientId = ID, count = QUANTIDADE, name = "NOME"}
+
+SERVIDOR (refresh):
+  [DIA] = {itemId = ID, count = QUANTIDADE, name = "NOME"}
+
+SERVIDOR (claim - Parte 1):
+  [DIA] = {itemId = ID, count = QUANTIDADE}
+
+SERVIDOR (claim - Parte 2):
+  [DIA] = {itemId = ID, count = QUANTIDADE, name = "NOME"}
+
+================================================================================
+ITENS ATUAIS (21 DIAS)
+================================================================================
+
+Dia 1:  Leaf Stone (ID: 26731)
+Dia 2:  Fire Stone (ID: 26728)
+Dia 3:  Water Stone (ID: 26736)
+Dia 4:  Thunder Stone (ID: 26734)
+Dia 5:  Hundred Dollar x5 (ID: 2152)
+Dia 6:  Great Potion x3 (ID: 27643)
+Dia 7:  Sun Stone (ID: 26748)
+Dia 8:  Rare Candy x2 (ID: 38787)
+Dia 9:  Ten Thousand Dollar (ID: 2160)
+Dia 10: Ultra Potion x2 (ID: 27641)
+Dia 11: Leaf Stone x2 (ID: 26731)
+Dia 12: Revive x3 (ID: 27645)
+Dia 13: Hundred Dollar x10 (ID: 2152)
+Dia 14: Fire Stone x2 (ID: 26728)
+Dia 15: Rare Candy x3 (ID: 38787)
+Dia 16: Water Stone x2 (ID: 26736)
+Dia 17: Ten Thousand Dollar x2 (ID: 2160)
+Dia 18: Hyper Potion x5 (ID: 27647)
+Dia 19: Thunder Stone x2 (ID: 26734)
+Dia 20: Rare Candy x5 (ID: 38787)
+Dia 21: Ten Thousand Dollar x10 (ID: 2160)
+
+================================================================================
+COMO EDITAR OS ITENS
+================================================================================
+
+PASSO 1: Decidir qual item quer em qual dia
+PASSO 2: Encontrar o ID do item
+PASSO 3: Editar no CLIENTE (game_daily_rewards.lua)
+PASSO 4: Editar no SERVIDOR - refresh (extendedopcode.lua)
+PASSO 5: Editar no SERVIDOR - claim Parte 1 (extendedopcode.lua)
+PASSO 6: Editar no SERVIDOR - claim Parte 2 (extendedopcode.lua)
+PASSO 7: Salvar todos os arquivos
+PASSO 8: Reiniciar servidor e cliente
+
+IMPORTANTE: Edite em TODOS os 4 lugares!
+
+================================================================================
+DOCUMENTAÇÃO DISPONÍVEL
+================================================================================
+
+Para entender melhor:
+  • ONDE_EDITAR_ITENS.txt - Guia detalhado com linhas exatas
+  • GUIA_VISUAL_EDICAO.txt - Guia com exemplos visuais
+  • CHECKLIST_EDICAO.txt - Checklist rápido
+  • CORRIGIDO_ITENS_MUDAM.txt - Explicação do problema resolvido
+
+================================================================================
+CHECKLIST FINAL
+================================================================================
+
+□ Reiniciei o servidor
+□ Reiniciei o cliente
+□ Conectei ao servidor
+□ Cliquei no ícone de presente (gift)
+□ Os 21 itens aparecem corretamente
+□ Cliquei em "CLAIM REWARD"
+□ Os itens NÃO mudaram
+□ Fechei e abri a janela novamente
+□ Os itens continuam corretos
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.5.0
+Data: 14/03/2026
+Status: ✅ PRONTO PARA PRODUÇÃO!
+
+================================================================================

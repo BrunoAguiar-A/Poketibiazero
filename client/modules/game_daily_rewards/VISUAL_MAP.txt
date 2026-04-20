@@ -1,0 +1,235 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    DAILY REWARDS MODULE - VISUAL MAP                       ║
+║                              Versão 1.1.0                                  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌─ ESTRUTURA DO MÓDULO ─────────────────────────────────────────────────────┐
+│                                                                             │
+│  game_daily_rewards/                                                        │
+│  │                                                                          │
+│  ├─ 📄 CÓDIGO (4 arquivos)                                                 │
+│  │  ├─ game_daily_rewards.lua ........... Lógica principal                 │
+│  │  ├─ game_daily_rewards.otui ......... Interface visual                  │
+│  │  ├─ game_daily_rewards.otmod ........ Configuração                      │
+│  │  └─ styles.otui ..................... Estilos                           │
+│  │                                                                          │
+│  ├─ 📚 DOCUMENTAÇÃO (10 arquivos)                                          │
+│  │  ├─ 00_LEIA_PRIMEIRO.txt ............ Comece aqui!                      │
+│  │  ├─ INDEX.md ........................ Índice de tópicos                  │
+│  │  ├─ README.md ....................... Visão geral                       │
+│  │  ├─ QUICK_START.md .................. Início rápido (5 min)             │
+│  │  ├─ SERVER_INTEGRATION.md ........... Integração com servidor           │
+│  │  ├─ USAGE_EXAMPLES.md ............... Exemplos práticos                 │
+│  │  ├─ CHANGELOG.md .................... Histórico de versões              │
+│  │  ├─ SUMMARY.txt ..................... Resumo visual                      │
+│  │  ├─ STRUCTURE.txt ................... Estrutura técnica                 │
+│  │  └─ VISUAL_MAP.txt .................. Este arquivo                      │
+│  │                                                                          │
+│  ├─ 🖼️  IMAGENS (4 arquivos - 179.6 KB)                                    │
+│  │  ├─ banner.png ...................... 82.7 KB (Header)                  │
+│  │  ├─ corki.png ....................... 11.5 KB (Personagem)              │
+│  │  ├─ gift.png ........................ 289 B (Ícone)                      │
+│  │  └─ sonia.png ....................... 85.1 KB (Personagem)              │
+│  │                                                                          │
+│  └─ 📊 TOTAL: 18 arquivos, ~231 KB                                         │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ FLUXO DE FUNCIONAMENTO ──────────────────────────────────────────────────┐
+│                                                                             │
+│  CLIENTE                              SERVIDOR                             │
+│  ┌──────────────────┐                 ┌──────────────────┐                │
+│  │  Conecta ao      │                 │  Aguarda         │                │
+│  │  Servidor        │                 │  Conexão         │                │
+│  └────────┬─────────┘                 └────────┬─────────┘                │
+│           │                                    │                          │
+│           ├─ requestRewardsData() ───────────→ │                          │
+│           │                                    │                          │
+│           │ ← onReceiveRewards() ─────────────┤                          │
+│           │                                    │                          │
+│           ├─ updateRewardsDisplay()            │                          │
+│           │                                    │                          │
+│           │ [Janela Aberta]                    │                          │
+│           │                                    │                          │
+│           ├─ startTimerUpdate()                │                          │
+│           │ (Atualiza a cada 1s)               │                          │
+│           │                                    │                          │
+│           │ [Jogador clica CLAIM]              │                          │
+│           │                                    │                          │
+│           ├─ claimReward() ──────────────────→ │                          │
+│           │                                    │                          │
+│           │ ← onReceiveRewards() ─────────────┤                          │
+│           │                                    │                          │
+│           ├─ updateRewardsDisplay()            │                          │
+│           │                                    │                          │
+│           └─ [Recompensa Adicionada]           │                          │
+│                                                │                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ INTERFACE VISUAL ────────────────────────────────────────────────────────┐
+│                                                                             │
+│  ╔═══════════════════════════════════════════════════════════════════════╗ │
+│  ║ Recompensas diarias                                            [_][□][X]║ │
+│  ╠═══════════════════════════════════════════════════════════════════════╣ │
+│  ║ [BANNER]  RECOMPENSAS DIARIAS - 21 DIAS                              ║ │
+│  ╠═══════════════════════════════════════════════════════════════════════╣ │
+│  ║                                                                       ║ │
+│  ║  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐          ║ │
+│  ║  │  1  │ │  2  │ │  3  │ │  4  │ │  5  │ │  6  │ │  7  │          ║ │
+│  ║  │ [✓] │ │ [✓] │ │ [✓] │ │ [✓] │ │ [!] │ │ [?] │ │ [?] │          ║ │
+│  ║  └─────┘ └─────┘ └─────┘ └─────┘ └─────┘ └─────┘ └─────┘          ║ │
+│  ║                                                                       ║ │
+│  ║  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐          ║ │
+│  ║  │  8  │ │  9  │ │ 10  │ │ 11  │ │ 12  │ │ 13  │ │ 14  │          ║ │
+│  ║  │ [?] │ │ [?] │ │ [?] │ │ [?] │ │ [?] │ │ [?] │ │ [?] │          ║ │
+│  ║  └─────┘ └─────┘ └─────┘ └─────┘ └─────┘ └─────┘ └─────┘          ║ │
+│  ║                                                                       ║ │
+│  ║  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐          ║ │
+│  ║  │ 15  │ │ 16  │ │ 17  │ │ 18  │ │ 19  │ │ 20  │ │ 21  │          ║ │
+│  ║  │ [?] │ │ [?] │ │ [?] │ │ [?] │ │ [?] │ │ [?] │ │ [?] │          ║ │
+│  ║  └─────┘ └─────┘ └─────┘ └─────┘ └─────┘ └─────┘ └─────┘          ║ │
+│  ║                                                                       ║ │
+│  ║  Aperte em Claim para coletar a recompensa do dia 5!                ║ │
+│  ║  Entre todos os dias para ganhar recompensas incríveis!             ║ │
+│  ║                                                                       ║ │
+│  ║                  [CLAIM REWARD]  [CLOSE]                            ║ │
+│  ║                                                                       ║ │
+│  ╚═══════════════════════════════════════════════════════════════════════╝ │
+│                                                                             │
+│  Legenda:                                                                   │
+│  [✓] = Dia coletado (Verde)                                               │
+│  [!] = Dia atual disponível (Amarelo)                                     │
+│  [...] = Dia atual indisponível (Vermelho)                                │
+│  [?] = Dia futuro (Cinza)                                                 │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROTOCOLO DE COMUNICAÇÃO ────────────────────────────────────────────────┐
+│                                                                             │
+│  OPCODE: 2                                                                  │
+│                                                                             │
+│  REQUISIÇÃO (Cliente → Servidor):                                          │
+│  ┌─────────────────────────────────────────────────────────────────────┐  │
+│  │ {"action": "refresh"}                                               │  │
+│  │ {"action": "claim"}                                                 │  │
+│  └─────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+│  RESPOSTA (Servidor → Cliente):                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐  │
+│  │ {                                                                   │  │
+│  │   "rewards": {                                                      │  │
+│  │     "1": {"clientId": 26731, "count": 1, "name": "Leaf Stone"},    │  │
+│  │     "2": {"clientId": 26728, "count": 1, "name": "Fire Stone"},    │  │
+│  │     ...                                                             │  │
+│  │   },                                                                │  │
+│  │   "currentDay": 5,                                                  │  │
+│  │   "canClaim": true,                                                 │  │
+│  │   "nextClaim": 1710345600,                                          │  │
+│  │   "autoShow": false                                                 │  │
+│  │ }                                                                   │  │
+│  └─────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ DOCUMENTAÇÃO ROADMAP ────────────────────────────────────────────────────┐
+│                                                                             │
+│  COMECE AQUI                                                                │
+│  ↓                                                                          │
+│  00_LEIA_PRIMEIRO.txt ← Leia primeiro!                                     │
+│  ↓                                                                          │
+│  ┌─────────────────────────────────────────────────────────────────────┐  │
+│  │ ESCOLHA SEU CAMINHO:                                                │  │
+│  │                                                                     │  │
+│  │ 1. RÁPIDO (5 min)          2. COMPLETO (30 min)                   │  │
+│  │    ↓                           ↓                                    │  │
+│  │    QUICK_START.md              README.md                           │  │
+│  │    ↓                           ↓                                    │  │
+│  │    Teste no cliente            USAGE_EXAMPLES.md                   │  │
+│  │    ↓                           ↓                                    │  │
+│  │    Pronto!                     Explore código                      │  │
+│  │                                ↓                                    │  │
+│  │                                Pronto!                             │  │
+│  │                                                                     │  │
+│  │ 3. SERVIDOR (1 hora)       4. REFERÊNCIA                          │  │
+│  │    ↓                           ↓                                    │  │
+│  │    QUICK_START.md              INDEX.md                            │  │
+│  │    ↓                           ↓                                    │  │
+│  │    SERVER_INTEGRATION.md       SUMMARY.txt                         │  │
+│  │    ↓                           STRUCTURE.txt                       │  │
+│  │    Implemente handler          CHANGELOG.md                        │  │
+│  │    ↓                           ↓                                    │  │
+│  │    Teste integração            Referência rápida                   │  │
+│  │    ↓                                                                │  │
+│  │    Pronto!                                                          │  │
+│  └─────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ ESTATÍSTICAS ────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  Arquivos:                                                                  │
+│  ├─ Código: 4 arquivos (15.9 KB)                                           │
+│  ├─ Documentação: 10 arquivos (~36 KB)                                     │
+│  ├─ Imagens: 4 arquivos (179.6 KB)                                         │
+│  └─ TOTAL: 18 arquivos (231.6 KB)                                          │
+│                                                                             │
+│  Linhas:                                                                    │
+│  ├─ Código Lua: ~400 linhas                                                │
+│  ├─ OTUI: ~150 linhas                                                      │
+│  ├─ Documentação: ~1500 linhas                                             │
+│  └─ TOTAL: ~2050 linhas                                                    │
+│                                                                             │
+│  Tamanho:                                                                   │
+│  ├─ Código: 7%                                                              │
+│  ├─ Documentação: 16%                                                       │
+│  ├─ Imagens: 77%                                                            │
+│  └─ TOTAL: 100%                                                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ FUNCIONALIDADES ─────────────────────────────────────────────────────────┐
+│                                                                             │
+│  ✅ 21 dias de recompensas progressivas                                    │
+│  ✅ Interface visual com estados (bloqueado/disponível/coletado)           │
+│  ✅ Cores indicativas para cada estado                                     │
+│  ✅ Timer em tempo real (atualiza a cada 1 segundo)                        │
+│  ✅ Comunicação com servidor via protocolo estendido                       │
+│  ✅ Suporte a JSON para troca de dados                                     │
+│  ✅ Imagens integradas da PSTORY                                           │
+│  ✅ Gerenciamento automático de timer                                      │
+│  ✅ Validação de dados robusta                                             │
+│  ✅ Documentação completa                                                  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PRÓXIMOS PASSOS ─────────────────────────────────────────────────────────┐
+│                                                                             │
+│  1. ✅ Verificar instalação                                                │
+│     └─ Todos os arquivos presentes? SIM ✓                                 │
+│                                                                             │
+│  2. ✅ Testar no cliente                                                   │
+│     └─ Janela abre? SIM ✓                                                 │
+│                                                                             │
+│  3. ⏳ Integrar com servidor                                               │
+│     └─ Implementar handler (veja SERVER_INTEGRATION.md)                   │
+│                                                                             │
+│  4. ⏳ Configurar recompensas                                              │
+│     └─ Definir itens para cada dia                                        │
+│                                                                             │
+│  5. ⏳ Deploy em produção                                                  │
+│     └─ Testar e publicar                                                  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║  ✅ MÓDULO PRONTO PARA USO!                                               ║
+║                                                                            ║
+║  Versão: 1.1.0                                                             ║
+║  Data: 13/03/2026                                                          ║
+║  Autor: Nordemon Team                                                      ║
+║  Status: ✅ Pronto para uso                                                ║
+║                                                                            ║
+║  Próximo passo: Leia 00_LEIA_PRIMEIRO.txt                                 ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝

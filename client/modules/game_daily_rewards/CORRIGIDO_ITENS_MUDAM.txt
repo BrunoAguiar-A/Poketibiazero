@@ -1,0 +1,111 @@
+================================================================================
+                    ✅ PROBLEMA DOS ITENS MUDAREM - RESOLVIDO!
+================================================================================
+
+O PROBLEMA FOI IDENTIFICADO E CORRIGIDO!
+
+================================================================================
+O QUE ESTAVA ACONTECENDO
+================================================================================
+
+Após clicar em "CLAIM REWARD", os itens mudavam porque:
+
+1. O cliente coletava a recompensa
+2. O servidor enviava uma resposta com dados ANTIGOS
+3. O cliente recebia esses dados antigos
+4. Os itens mudavam para os valores antigos
+
+================================================================================
+O QUE FOI CORRIGIDO
+================================================================================
+
+Arquivo: SERVER/data/creaturescripts/scripts/extendedopcode.lua
+
+Seção: "claim" (após coletar recompensa)
+
+ANTES:
+  O servidor enviava rewardsDataResponse com IDs antigos:
+  [1] = {itemId = 2152, count = 1, name = "Hundred Dollar"},
+  [2] = {itemId = 2160, count = 1, name = "Ten Thousand Dollar"},
+  [3] = {itemId = 14435, count = 1, name = "Item 1"},
+  ... (IDs inválidos)
+
+DEPOIS:
+  O servidor agora envia rewardsDataResponse com IDs CORRETOS:
+  [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},
+  [2] = {itemId = 26728, count = 1, name = "Fire Stone"},
+  [3] = {itemId = 26736, count = 1, name = "Water Stone"},
+  ... (IDs corretos)
+
+================================================================================
+RESULTADO
+================================================================================
+
+✅ Os itens NÃO mudam mais após clicar em "CLAIM REWARD"
+✅ Os itens permanecem os mesmos durante toda a sessão
+✅ O cliente e servidor estão sincronizados
+
+================================================================================
+COMO TESTAR
+================================================================================
+
+1. Reinicie o servidor
+2. Reinicie o cliente
+3. Conecte ao servidor
+4. Clique no ícone de presente (gift)
+5. Verifique se os itens aparecem corretamente
+6. Clique em "CLAIM REWARD"
+7. Verifique se os itens PERMANECEM os mesmos
+8. Feche a janela e abra novamente
+9. Verifique se os itens continuam corretos
+
+================================================================================
+ONDE FOI CORRIGIDO
+================================================================================
+
+Arquivo: SERVER/data/creaturescripts/scripts/extendedopcode.lua
+
+Linhas: 375-415 (aproximadamente)
+
+Procure por:
+  elseif data.action == "claim" then
+      ...
+      player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Recompensa coletada com sucesso!")
+      
+      -- Enviar dados atualizados
+      local rewardsDataResponse = {
+
+O que foi mudado:
+  • Substituídos os IDs antigos pelos IDs corretos
+  • Agora envia os mesmos dados que o cliente espera
+
+================================================================================
+IMPORTANTE
+================================================================================
+
+Se você editar os itens no futuro, LEMBRE-SE:
+
+Você precisa editar em TRÊS lugares:
+
+1. CLIENTE (game_daily_rewards.lua)
+   Linhas: 17-42
+   Procure: local rewardsData = {
+
+2. SERVIDOR - Seção "refresh" (extendedopcode.lua)
+   Linhas: 261-290
+   Procure: if data.action == "refresh" then
+
+3. SERVIDOR - Seção "claim" (extendedopcode.lua)
+   Linhas: 375-415
+   Procure: elseif data.action == "claim" then
+   Procure: local rewardsDataResponse = {
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.5.0
+Data: 14/03/2026
+Status: ✅ Itens não mudam mais após claim!
+
+================================================================================

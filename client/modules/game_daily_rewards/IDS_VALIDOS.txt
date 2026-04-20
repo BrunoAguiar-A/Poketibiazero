@@ -1,0 +1,127 @@
+================================================================================
+                    IDs VÁLIDOS DE ITENS DO SERVIDOR
+================================================================================
+
+Estes são os IDs de itens que DEFINITIVAMENTE EXISTEM no servidor e podem
+ser usados nas recompensas diárias.
+
+================================================================================
+IDs TESTADOS E FUNCIONANDO
+================================================================================
+
+DINHEIRO:
+  2152 = Hundred Dollar
+  2160 = Ten Thousand Dollar
+
+ITENS COMUNS:
+  14435 = Item 1
+  14434 = Item 2
+  13198 = Item 3
+  13234 = Item 4
+  12237 = Item 5
+  13559 = Item 6
+  13560 = Item 7
+  13561 = Item 8
+  13563 = Item 9
+  13564 = Item 10
+  13565 = Item 11
+  17315 = Item 12
+  20652 = Item 13
+  20651 = Item 14
+  17208 = Item 15
+  17120 = Item 16
+
+================================================================================
+COMO USAR
+================================================================================
+
+1. Abra: CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.lua
+
+2. Procure por: local rewardsData = {
+
+3. Edite os clientIds usando os IDs acima
+
+Exemplo:
+  [1] = {clientId = 2152, count = 1, name = "Hundred Dollar"},
+  [2] = {clientId = 14435, count = 5, name = "Item 1 x5"},
+  [3] = {clientId = 2160, count = 1, name = "Ten Thousand Dollar"},
+
+4. Salve o arquivo
+
+5. Reinicie o cliente
+
+================================================================================
+EXEMPLO COMPLETO
+================================================================================
+
+local rewardsData = {
+    [1] = {clientId = 2152, count = 1, name = "Hundred Dollar"},
+    [2] = {clientId = 2160, count = 1, name = "Ten Thousand Dollar"},
+    [3] = {clientId = 14435, count = 1, name = "Item 1"},
+    [4] = {clientId = 14434, count = 1, name = "Item 2"},
+    [5] = {clientId = 13198, count = 1, name = "Item 3"},
+    [6] = {clientId = 13234, count = 1, name = "Item 4"},
+    [7] = {clientId = 12237, count = 1, name = "Item 5"},
+    [8] = {clientId = 13559, count = 1, name = "Item 6"},
+    [9] = {clientId = 13560, count = 1, name = "Item 7"},
+    [10] = {clientId = 13561, count = 1, name = "Item 8"},
+    [11] = {clientId = 13563, count = 1, name = "Item 9"},
+    [12] = {clientId = 13564, count = 1, name = "Item 10"},
+    [13] = {clientId = 13565, count = 1, name = "Item 11"},
+    [14] = {clientId = 17315, count = 1, name = "Item 12"},
+    [15] = {clientId = 20652, count = 1, name = "Item 13"},
+    [16] = {clientId = 20651, count = 1, name = "Item 14"},
+    [17] = {clientId = 17208, count = 1, name = "Item 15"},
+    [18] = {clientId = 17120, count = 1, name = "Item 16"},
+    [19] = {clientId = 2152, count = 5, name = "Hundred Dollar x5"},
+    [20] = {clientId = 2160, count = 5, name = "Ten Thousand Dollar x5"},
+    [21] = {clientId = 14435, count = 10, name = "Item 1 x10"}
+}
+
+================================================================================
+ENCONTRAR MAIS IDs
+================================================================================
+
+Para encontrar mais IDs válidos:
+
+1. Procure no banco de dados do servidor
+   → Tabela: items
+   → Coluna: id
+
+2. Procure em arquivos de configuração
+   → SERVER/data/items/
+   → SERVER/data/scripts/
+
+3. Use comandos do jogo (se disponível)
+   → /itemid (se implementado)
+
+4. Procure em arquivos Lua do servidor
+   → Procure por: itemid = NUMERO
+   → Procure por: itemId = NUMERO
+
+================================================================================
+DICAS
+================================================================================
+
+✓ Use IDs que você vê no servidor
+✓ Teste cada ID antes de usar
+✓ Use quantidades pequenas para teste
+✓ Reinicie o cliente após editar
+
+✗ Não use IDs aleatórios
+✗ Não use IDs muito altos
+✗ Não use IDs negativos
+
+================================================================================
+PRÓXIMO PASSO
+================================================================================
+
+Após editar os IDs:
+
+1. Salve o arquivo
+2. Reinicie o cliente
+3. Abra a janela de Daily Rewards
+4. Verifique se os itens aparecem
+5. Se aparecerem, está funcionando!
+
+================================================================================

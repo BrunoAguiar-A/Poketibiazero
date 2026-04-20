@@ -1,0 +1,108 @@
+================================================================================
+                    ✅ BOTÕES CENTRALIZADOS - LAYOUT PERFEITO
+================================================================================
+
+OS BOTÕES FORAM CENTRALIZADOS COM SUCESSO!
+
+================================================================================
+O QUE FOI MUDADO
+================================================================================
+
+Arquivo: game_daily_rewards.otui
+
+BOTÃO CLOSE:
+  ANTES:
+    anchors.right: claimButton.left
+    anchors.bottom: parent.bottom
+    margin-bottom: 15
+    margin-right: 10
+
+  DEPOIS:
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 15
+    margin-left: -80
+
+BOTÃO CLAIM REWARD:
+  (Mantém igual, apenas centralizado)
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 15
+
+================================================================================
+RESULTADO VISUAL
+================================================================================
+
+ANTES:
+  ┌─────────────────────────────────────┐
+  │ RECOMPENSAS DIARIAS - 21 DIAS       │
+  │                                     │
+  │ [Grid 7x3 com 21 itens]             │
+  │                                     │
+  │ Próxima recompensa em 24h           │
+  │ Entre todos os dias...              │
+  │                                     │
+  │ [CLOSE] [CLAIM REWARD]              │ ← Alinhados à direita
+  └─────────────────────────────────────┘
+
+DEPOIS:
+  ┌─────────────────────────────────────┐
+  │ RECOMPENSAS DIARIAS - 21 DIAS       │
+  │                                     │
+  │ [Grid 7x3 com 21 itens]             │
+  │                                     │
+  │ Próxima recompensa em 24h           │
+  │ Entre todos os dias...              │
+  │                                     │
+  │   [CLOSE] [CLAIM REWARD]            │ ← Centralizados
+  └─────────────────────────────────────┘
+
+================================================================================
+DETALHES TÉCNICOS
+================================================================================
+
+Arquivo: CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.otui
+
+Linhas: 115-130 (aproximadamente)
+
+BOTÃO CLOSE:
+  • anchors.horizontalCenter: parent.horizontalCenter
+    → Centraliza horizontalmente no módulo
+  
+  • margin-left: -80
+    → Move o botão 80 pixels para a esquerda
+    → Resultado: Fica à esquerda do botão CLAIM REWARD
+
+BOTÃO CLAIM REWARD:
+  • anchors.horizontalCenter: parent.horizontalCenter
+    → Centraliza horizontalmente no módulo
+  
+  • Sem margin-left
+    → Fica no centro
+
+Resultado:
+  • Ambos os botões ficam centralizados no módulo
+  • CLOSE fica à esquerda
+  • CLAIM REWARD fica à direita
+  • Espaçamento equilibrado entre eles
+
+================================================================================
+COMO TESTAR
+================================================================================
+
+1. Reinicie o cliente
+2. Conecte ao servidor
+3. Clique no ícone de presente (gift)
+4. Verifique se os botões estão centralizados horizontalmente
+5. Verifique se não há sobreposição de elementos
+6. Clique nos botões para verificar se funcionam
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.7.0
+Data: 14/03/2026
+Status: ✅ Botões centralizados com sucesso!
+
+================================================================================

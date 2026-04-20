@@ -1,0 +1,164 @@
+================================================================================
+                    ✅ ESTRUTURA CORRETA - ÍCONES VERTICAIS
+================================================================================
+
+Agora entendi! A imagem é 20×100, mas os ícones estão dispostos VERTICALMENTE!
+
+================================================================================
+A IMAGEM CORRETA
+================================================================================
+
+Tamanho: 20 pixels de altura × 100 pixels de largura
+
+MAS os ícones estão dispostos VERTICALMENTE (um embaixo do outro):
+
+  ┌──────────┐
+  │ ÍCONE 1  │ ← Y = 0 (FLY)
+  ├──────────┤
+  │ ÍCONE 2  │ ← Y = 20 (TELEPORT)
+  ├──────────┤
+  │ ÍCONE 3  │ ← Y = 40 (CUT)
+  ├──────────┤
+  │ ÍCONE 4  │ ← Y = 60 (SURF)
+  ├──────────┤
+  │ ÍCONE 5  │ ← Y = 80 (DIG)
+  └──────────┘
+
+Altura total: 100 pixels (5 ícones × 20 pixels)
+Largura: 20 pixels
+
+================================================================================
+OS 3 PRIMEIROS ÍCONES
+================================================================================
+
+ÍCONE 1 - FLY (Y = 0)
+─────────────────────
+
+Posição: Começa no pixel 0 de cima
+
+Código:
+  fly = {
+    tooltip = "Fly",
+    imageClip = "0 0 20 20",
+    ...
+  }
+
+Explicação:
+  • X = 0 (posição horizontal)
+  • Y = 0 (começa no topo)
+  • Pega 20 pixels de largura
+  • Pega 20 pixels de altura
+
+────────────────────────────────────────────────────────────
+
+ÍCONE 2 - TELEPORT (Y = 20)
+───────────────────────────
+
+Posição: Começa no pixel 20 de cima
+
+Código:
+  teleport = {
+    tooltip = "Teleport",
+    imageClip = "0 20 20 20",
+    ...
+  }
+
+Explicação:
+  • X = 0 (posição horizontal)
+  • Y = 20 (começa 20 pixels de cima)
+  • Pega 20 pixels de largura
+  • Pega 20 pixels de altura
+
+────────────────────────────────────────────────────────────
+
+ÍCONE 3 - CUT (Y = 40)
+──────────────────────
+
+Posição: Começa no pixel 40 de cima
+
+Código (CORRIGIDO):
+  cut = {
+    tooltip = "Cut",
+    imageClip = "0 40 20 20",
+    ...
+  }
+
+Explicação:
+  • X = 0 (posição horizontal)
+  • Y = 40 (começa 40 pixels de cima)
+  • Pega 20 pixels de largura
+  • Pega 20 pixels de altura
+
+================================================================================
+O PADRÃO CORRETO
+================================================================================
+
+Vendo os 3 primeiros:
+
+  FLY:      imageClip = "0 0 20 20"    ← Y = 0
+  TELEPORT: imageClip = "0 20 20 20"   ← Y = 20
+  CUT:      imageClip = "0 40 20 20"   ← Y = 40
+
+PADRÃO:
+  • X é SEMPRE 0 (porque a imagem tem apenas 20 pixels de altura)
+  • Y aumenta de 20 em 20: 0, 20, 40, 60, 80
+  • Largura é SEMPRE 20
+  • Altura é SEMPRE 20
+
+PRÓXIMOS ÍCONES:
+  SURF:     imageClip = "0 60 20 20"   ← Y = 60
+  DIG:      imageClip = "0 80 20 20"   ← Y = 80
+
+================================================================================
+RESUMO SUPER SIMPLES
+================================================================================
+
+A imagem tem 100 pixels de altura (não largura!).
+
+Cada ícone ocupa 20 pixels de altura.
+
+Então:
+  • 1º ícone: pixels 0-20   → imageClip = "0 0 20 20"
+  • 2º ícone: pixels 20-40  → imageClip = "0 20 20 20"
+  • 3º ícone: pixels 40-60  → imageClip = "0 40 20 20"
+  • 4º ícone: pixels 60-80  → imageClip = "0 60 20 20"
+  • 5º ícone: pixels 80-100 → imageClip = "0 80 20 20"
+
+FÓRMULA:
+  Y = (número do ícone - 1) × 20
+
+É SÓ ISSO!
+
+================================================================================
+VISUALIZAÇÃO
+================================================================================
+
+Imagem 20×100 com ícones VERTICAIS:
+
+  ┌──────────┐
+  │ 0-20     │ ← Y = 0 (FLY)
+  ├──────────┤
+  │ 20-40    │ ← Y = 20 (TELEPORT)
+  ├──────────┤
+  │ 40-60    │ ← Y = 40 (CUT) ✅ CORRIGIDO!
+  ├──────────┤
+  │ 60-80    │ ← Y = 60 (SURF)
+  ├──────────┤
+  │ 80-100   │ ← Y = 80 (DIG)
+  └──────────┘
+
+Cada ícone:
+  • Começa em X = 0 (sempre)
+  • Começa em Y = 0, 20, 40, 60, 80
+  • Tem 20 pixels de largura
+  • Tem 20 pixels de altura
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.0.0
+Data: 14/03/2026
+Status: ✅ Estrutura correta - ícones verticais!
+
+================================================================================

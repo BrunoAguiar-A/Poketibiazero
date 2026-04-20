@@ -1,0 +1,271 @@
+================================================================================
+                    EXEMPLO VISUAL - SISTEMA DE ÍCONES
+================================================================================
+
+================================================================================
+EXEMPLO 1: IMAGEM COM 2 ÍCONES (40x20 pixels)
+================================================================================
+
+IMAGEM VISUAL:
+┌──────────────────────────────────────────┐
+│                                          │
+│  ┌──────────────┬──────────────┐         │
+│  │              │              │         │
+│  │   FLY        │  TELEPORT    │         │
+│  │   (0,0)      │  (20,0)      │         │
+│  │              │              │         │
+│  └──────────────┴──────────────┘         │
+│                                          │
+│  Cada ícone: 20x20 pixels                │
+│  Imagem total: 40x20 pixels              │
+│                                          │
+└──────────────────────────────────────────┘
+
+CÓDIGO pokebar.lua:
+
+  local abilities = {
+    fly = {
+      tooltip = "Fly",
+      imageClip = "0 0 20 20",      ← Começa em (0,0)
+      callback = function()
+        g_game.getLocalPlayer():doUseSelfOrder()
+      end
+    },
+    teleport = {
+      tooltip = "Teleport",
+      imageClip = "20 0 20 20",     ← Começa em (20,0)
+      callback = function()
+        modules.game_minimap.toggleFullMap()
+      end
+    }
+  }
+
+================================================================================
+EXEMPLO 2: IMAGEM COM 4 ÍCONES (40x40 pixels)
+================================================================================
+
+IMAGEM VISUAL:
+┌──────────────────────────────────────────┐
+│                                          │
+│  ┌──────────────┬──────────────┐         │
+│  │              │              │         │
+│  │   FLY        │  TELEPORT    │         │
+│  │   (0,0)      │  (20,0)      │         │
+│  │              │              │         │
+│  ├──────────────┼──────────────┤         │
+│  │              │              │         │
+│  │   CUT        │   SURF       │         │
+│  │   (0,20)     │  (20,20)     │         │
+│  │              │              │         │
+│  └──────────────┴──────────────┘         │
+│                                          │
+│  Cada ícone: 20x20 pixels                │
+│  Imagem total: 40x40 pixels              │
+│  Grid: 2 colunas x 2 linhas              │
+│                                          │
+└──────────────────────────────────────────┘
+
+CÓDIGO pokebar.lua:
+
+  local abilities = {
+    fly = {
+      tooltip = "Fly",
+      imageClip = "0 0 20 20",      ← Linha 1, Coluna 1
+      callback = function()
+        g_game.getLocalPlayer():doUseSelfOrder()
+      end
+    },
+    teleport = {
+      tooltip = "Teleport",
+      imageClip = "20 0 20 20",     ← Linha 1, Coluna 2
+      callback = function()
+        modules.game_minimap.toggleFullMap()
+      end
+    },
+    cut = {
+      tooltip = "Cut",
+      imageClip = "0 20 20 20",     ← Linha 2, Coluna 1
+      callback = function()
+        g_game.talk("!cut")
+      end
+    },
+    surf = {
+      tooltip = "Surf",
+      imageClip = "20 20 20 20",    ← Linha 2, Coluna 2
+      callback = function()
+        g_game.talk("!surf")
+      end
+    }
+  }
+
+================================================================================
+EXEMPLO 3: IMAGEM COM 9 ÍCONES (60x60 pixels)
+================================================================================
+
+IMAGEM VISUAL:
+┌────────────────────────────────────────────────────────┐
+│                                                        │
+│  ┌──────────┬──────────┬──────────┐                   │
+│  │   (0,0)  │  (20,0)  │  (40,0)  │                   │
+│  ├──────────┼──────────┼──────────┤                   │
+│  │  (0,20)  │ (20,20)  │ (40,20)  │                   │
+│  ├──────────┼──────────┼──────────┤                   │
+│  │  (0,40)  │ (20,40)  │ (40,40)  │                   │
+│  └──────────┴──────────┴──────────┘                   │
+│                                                        │
+│  Cada ícone: 20x20 pixels                             │
+│  Imagem total: 60x60 pixels                           │
+│  Grid: 3 colunas x 3 linhas                           │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+
+CÓDIGO pokebar.lua:
+
+  local abilities = {
+    fly = {
+      tooltip = "Fly",
+      imageClip = "0 0 20 20",      ← Linha 1, Coluna 1
+      callback = function() ... end
+    },
+    teleport = {
+      tooltip = "Teleport",
+      imageClip = "20 0 20 20",     ← Linha 1, Coluna 2
+      callback = function() ... end
+    },
+    cut = {
+      tooltip = "Cut",
+      imageClip = "40 0 20 20",     ← Linha 1, Coluna 3
+      callback = function() ... end
+    },
+    surf = {
+      tooltip = "Surf",
+      imageClip = "0 20 20 20",     ← Linha 2, Coluna 1
+      callback = function() ... end
+    },
+    dig = {
+      tooltip = "Dig",
+      imageClip = "20 20 20 20",    ← Linha 2, Coluna 2
+      callback = function() ... end
+    },
+    headbutt = {
+      tooltip = "Headbutt",
+      imageClip = "40 20 20 20",    ← Linha 2, Coluna 3
+      callback = function() ... end
+    },
+    strength = {
+      tooltip = "Strength",
+      imageClip = "0 40 20 20",     ← Linha 3, Coluna 1
+      callback = function() ... end
+    },
+    waterfall = {
+      tooltip = "Waterfall",
+      imageClip = "20 40 20 20",    ← Linha 3, Coluna 2
+      callback = function() ... end
+    },
+    rocksmash = {
+      tooltip = "Rock Smash",
+      imageClip = "40 40 20 20",    ← Linha 3, Coluna 3
+      callback = function() ... end
+    }
+  }
+
+================================================================================
+EXEMPLO 4: ALTERANDO UM ÍCONE
+================================================================================
+
+SITUAÇÃO:
+  Você quer mudar o ícone do FLY de (0,0) para (40,0)
+
+ANTES:
+  fly = {
+    tooltip = "Fly",
+    imageClip = "0 0 20 20",
+    callback = function()
+      g_game.getLocalPlayer():doUseSelfOrder()
+    end
+  }
+
+DEPOIS:
+  fly = {
+    tooltip = "Fly",
+    imageClip = "40 0 20 20",    ← Mudou de "0 0" para "40 0"
+    callback = function()
+      g_game.getLocalPlayer():doUseSelfOrder()
+    end
+  }
+
+RESULTADO:
+  O ícone do FLY agora será exibido da posição (40,0) da imagem
+
+================================================================================
+EXEMPLO 5: ADICIONANDO UMA NOVA HABILIDADE
+================================================================================
+
+SITUAÇÃO:
+  Você quer adicionar uma nova habilidade chamada "THUNDER"
+  O ícone está na posição (60,0) da imagem
+
+CÓDIGO ANTES:
+  local abilities = {
+    fly = { ... },
+    teleport = { ... },
+    cut = { ... }
+  }
+
+CÓDIGO DEPOIS:
+  local abilities = {
+    fly = { ... },
+    teleport = { ... },
+    cut = { ... },
+    thunder = {
+      tooltip = "Thunder",
+      imageClip = "60 0 20 20",
+      callback = function()
+        g_game.talk("!thunder")
+      end
+    }
+  }
+
+RESULTADO:
+  Uma nova habilidade "THUNDER" foi adicionada com seu ícone
+
+================================================================================
+DICAS VISUAIS
+================================================================================
+
+COORDENADAS COMUNS:
+
+Linha 1 (Y=0):
+  Coluna 1: "0 0 20 20"
+  Coluna 2: "20 0 20 20"
+  Coluna 3: "40 0 20 20"
+  Coluna 4: "60 0 20 20"
+  Coluna 5: "80 0 20 20"
+
+Linha 2 (Y=20):
+  Coluna 1: "0 20 20 20"
+  Coluna 2: "20 20 20 20"
+  Coluna 3: "40 20 20 20"
+  Coluna 4: "60 20 20 20"
+  Coluna 5: "80 20 20 20"
+
+Linha 3 (Y=40):
+  Coluna 1: "0 40 20 20"
+  Coluna 2: "20 40 20 20"
+  Coluna 3: "40 40 20 20"
+  Coluna 4: "60 40 20 20"
+  Coluna 5: "80 40 20 20"
+
+PADRÃO:
+  X aumenta de 20 em 20 (0, 20, 40, 60, 80, ...)
+  Y aumenta de 20 em 20 (0, 20, 40, 60, 80, ...)
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.0.0
+Data: 14/03/2026
+Status: ✅ Exemplos visuais completos
+
+================================================================================

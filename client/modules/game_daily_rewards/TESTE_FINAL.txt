@@ -1,0 +1,177 @@
+================================================================================
+                    TESTE FINAL - DAILY REWARDS
+================================================================================
+
+SIGA ESTES PASSOS PARA TESTAR O MÓDULO
+
+================================================================================
+PASSO 1: PREPARAR O CLIENTE
+================================================================================
+
+1. Feche o cliente completamente
+2. Aguarde 5 segundos
+3. Abra o cliente novamente
+4. Conecte ao servidor
+
+================================================================================
+PASSO 2: VERIFICAR CARREGAMENTO
+================================================================================
+
+1. Abra o console (Ctrl+Shift+C ou F12)
+2. Procure por estas mensagens:
+
+   >> Módulo de Daily Rewards carregado com sucesso!
+   >> Botão Daily Rewards adicionado ao topmenu
+
+Se vir estas mensagens, o módulo foi carregado corretamente.
+
+================================================================================
+PASSO 3: ABRIR O MÓDULO
+================================================================================
+
+Opção A: Clique no ícone de presente (gift) no topo da tela
+
+Opção B: Execute no console:
+  modules.game_daily_rewards.show()
+
+================================================================================
+PASSO 4: VERIFICAR OS ITENS
+================================================================================
+
+Você deve ver:
+
+✅ Título: "RECOMPENSAS DIARIAS - 21 DIAS"
+
+✅ 21 caixas de recompensas em grid 7x3:
+   - Linha 1: Dias 1-7
+   - Linha 2: Dias 8-14
+   - Linha 3: Dias 15-21
+
+✅ Cada caixa mostra:
+   - Número do dia (1-21)
+   - Ícone do item
+   - Status (OK, !, ---, etc)
+
+✅ Itens visíveis:
+   - Dia 1: Leaf Stone
+   - Dia 2: Fire Stone
+   - Dia 3: Water Stone
+   - Dia 4: Thunder Stone
+   - Dia 5: Hundred Dollar x5
+   - Dia 6: Great Potion x3
+   - Dia 7: Sun Stone
+   - Dia 8: Rare Candy x2
+   - Dia 9: Ten Thousand Dollar
+   - Dia 10: Ultra Potion x2
+   - Dia 11: Leaf Stone x2
+   - Dia 12: Revive x3
+   - Dia 13: Hundred Dollar x10
+   - Dia 14: Fire Stone x2
+   - Dia 15: Rare Candy x3
+   - Dia 16: Water Stone x2
+   - Dia 17: Ten Thousand Dollar x2
+   - Dia 18: Hyper Potion x5
+   - Dia 19: Thunder Stone x2
+   - Dia 20: Rare Candy x5
+   - Dia 21: Ten Thousand Dollar x10
+
+================================================================================
+PASSO 5: TESTAR CORES E ESTADOS
+================================================================================
+
+Os dias devem ter cores diferentes:
+
+✅ Dias passados (< dia atual):
+   - Cor: Verde (#00aa00)
+   - Status: OK
+   - Opacidade: 70%
+
+✅ Dia atual (= dia atual):
+   - Se pode coletar:
+     - Cor: Amarelo (#ffcc00)
+     - Status: !
+     - Brilho: Sim
+   - Se não pode coletar:
+     - Cor: Vermelho (#ff6666)
+     - Status: ...
+     - Brilho: Não
+
+✅ Dias futuros (> dia atual):
+   - Cor: Cinza (#2a2a2a)
+   - Status: ---
+   - Opacidade: 50%
+
+================================================================================
+PASSO 6: TESTAR BOTÕES
+================================================================================
+
+✅ Botão "CLAIM REWARD":
+   - Clique para coletar a recompensa do dia atual
+   - Deve enviar dados ao servidor
+
+✅ Botão "CLOSE":
+   - Clique para fechar a janela
+   - A janela deve desaparecer
+
+================================================================================
+PASSO 7: TESTAR TIMER
+================================================================================
+
+✅ Se não pode coletar:
+   - Deve mostrar: "Proxima recompensa em Xh Ym"
+   - O timer deve atualizar a cada segundo
+
+✅ Se pode coletar:
+   - Deve mostrar: "Aperte em Claim para coletar a recompensa do dia X!"
+
+================================================================================
+PASSO 8: TESTAR INTEGRAÇÃO COM SERVIDOR
+================================================================================
+
+1. Clique em "CLAIM REWARD"
+2. Verifique se:
+   - O servidor recebe a solicitação
+   - O item é entregue no inventário
+   - A interface atualiza corretamente
+
+================================================================================
+CHECKLIST FINAL
+================================================================================
+
+□ Módulo carrega sem erros
+□ Botão aparece no topmenu
+□ Janela abre corretamente
+□ 21 itens aparecem com ícones
+□ Cores dos dias estão corretas
+□ Botões funcionam
+□ Timer atualiza
+□ Servidor responde corretamente
+□ Itens são entregues
+
+================================================================================
+SE ALGO NÃO FUNCIONAR
+================================================================================
+
+1. Verifique o console para mensagens de erro
+2. Reinicie o cliente
+3. Verifique se todos os arquivos existem:
+   - game_daily_rewards.lua
+   - game_daily_rewards.otui
+   - game_daily_rewards.otmod
+   - images/gift.png
+
+4. Se ainda não funcionar, execute no console:
+   print(modules.game_daily_rewards)
+   
+   Se retornar nil, o módulo não foi carregado.
+   Se retornar uma tabela, o módulo foi carregado.
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.3.0
+Data: 14/03/2026
+Status: ✅ Pronto para teste final
+
+================================================================================

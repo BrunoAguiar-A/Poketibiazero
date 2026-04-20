@@ -1,0 +1,244 @@
+================================================================================
+                    GUIA PRÁTICO - COMO EDITAR OS ÍCONES
+================================================================================
+
+Passo a passo para editar os ícones da imagem 20×100.
+
+================================================================================
+PASSO 1: ENTENDER A ESTRUTURA
+================================================================================
+
+A imagem icons.png tem:
+  • 20 pixels de altura
+  • 100 pixels de largura
+  • 5 ícones de 20×20 pixels cada
+
+Layout:
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+  │ FLY      │TELEPORT  │ CUT      │ SURF     │ DIG      │
+  │ (0-20)   │ (20-40)  │ (40-60)  │ (60-80)  │ (80-100) │
+  └──────────┴──────────┴──────────┴──────────┴──────────┘
+
+================================================================================
+PASSO 2: ABRIR A IMAGEM
+================================================================================
+
+1. Abra um editor de imagens (GIMP, Photoshop, Paint.NET, etc)
+2. Abra o arquivo: /images/game/pokebar/icons.png
+3. Verifique o tamanho: deve ser 20×100 pixels
+
+================================================================================
+PASSO 3: IDENTIFICAR QUAL ÍCONE EDITAR
+================================================================================
+
+Use a régua ou zoom para identificar a posição:
+
+  Ícone 1 (FLY):      Pixels 0-20
+  Ícone 2 (TELEPORT): Pixels 20-40
+  Ícone 3 (CUT):      Pixels 40-60
+  Ícone 4 (SURF):     Pixels 60-80
+  Ícone 5 (DIG):      Pixels 80-100
+
+Exemplo: Se quer editar o TELEPORT, trabalhe na área de pixels 20-40
+
+================================================================================
+PASSO 4: EDITAR O ÍCONE
+================================================================================
+
+1. Selecione a área do ícone que quer editar
+2. Altere o ícone (desenhe, copie, cole, etc)
+3. Certifique-se de que o ícone tem exatamente 20×20 pixels
+4. Não altere a altura (deve permanecer 20 pixels)
+
+================================================================================
+PASSO 5: SALVAR A IMAGEM
+================================================================================
+
+1. Salve como PNG (não use JPG)
+2. Mantenha o nome: icons.png
+3. Mantenha o tamanho: 20×100 pixels
+4. Salve no local correto: /images/game/pokebar/
+
+================================================================================
+PASSO 6: REINICIAR O CLIENTE
+================================================================================
+
+1. Feche o cliente completamente
+2. Aguarde 5 segundos
+3. Abra o cliente novamente
+4. Conecte ao servidor
+5. Verifique se o novo ícone aparece
+
+================================================================================
+EXEMPLO PRÁTICO 1: ALTERAR O ÍCONE DO FLY
+================================================================================
+
+OBJETIVO: Mudar o ícone do FLY (primeiro ícone)
+
+PASSO 1: Abrir a imagem
+  • Abra icons.png em um editor
+
+PASSO 2: Localizar o ícone
+  • O ícone FLY está nos pixels 0-20 (primeira posição)
+  
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+  │██████████│          │          │          │          │
+  │██████████│          │          │          │          │
+  └──────────┴──────────┴──────────┴──────────┴──────────┘
+  0         20        40        60        80       100
+  ↑ Aqui está o FLY
+
+PASSO 3: Editar o ícone
+  • Selecione a área 0-20
+  • Altere o ícone
+  • Certifique-se de que tem 20×20 pixels
+
+PASSO 4: Salvar
+  • Salve como PNG
+  • Mantenha o tamanho 20×100
+
+PASSO 5: Reiniciar o cliente
+  • Feche e abra o cliente
+  • O novo ícone aparecerá
+
+RESULTADO:
+  O ícone do FLY foi alterado com sucesso!
+
+================================================================================
+EXEMPLO PRÁTICO 2: ALTERAR O ÍCONE DO TELEPORT
+================================================================================
+
+OBJETIVO: Mudar o ícone do TELEPORT (segundo ícone)
+
+PASSO 1: Abrir a imagem
+  • Abra icons.png em um editor
+
+PASSO 2: Localizar o ícone
+  • O ícone TELEPORT está nos pixels 20-40 (segunda posição)
+  
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+  │          │██████████│          │          │          │
+  │          │██████████│          │          │          │
+  └──────────┴──────────┴──────────┴──────────┴──────────┘
+  0         20        40        60        80       100
+             ↑ Aqui está o TELEPORT
+
+PASSO 3: Editar o ícone
+  • Selecione a área 20-40
+  • Altere o ícone
+  • Certifique-se de que tem 20×20 pixels
+
+PASSO 4: Salvar
+  • Salve como PNG
+  • Mantenha o tamanho 20×100
+
+PASSO 5: Reiniciar o cliente
+  • Feche e abra o cliente
+  • O novo ícone aparecerá
+
+RESULTADO:
+  O ícone do TELEPORT foi alterado com sucesso!
+
+================================================================================
+EXEMPLO PRÁTICO 3: ADICIONAR UM 6º ÍCONE
+================================================================================
+
+OBJETIVO: Adicionar um novo ícone (HEADBUTT)
+
+PASSO 1: Aumentar a imagem
+  • Abra icons.png
+  • Aumente a largura de 100 para 120 pixels
+  • A altura permanece 20 pixels
+  • Resultado: imagem 20×120
+
+PASSO 2: Adicionar o novo ícone
+  • Adicione o novo ícone na posição 100-120
+  
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
+  │ FLY      │TELEPORT  │ CUT      │ SURF     │ DIG      │HEADBUTT  │
+  │ (0-20)   │ (20-40)  │ (40-60)  │ (60-80)  │ (80-100) │(100-120) │
+  └──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
+
+PASSO 3: Salvar
+  • Salve como PNG
+  • Novo tamanho: 20×120
+
+PASSO 4: Editar pokebar.lua
+  • Adicione a nova habilidade:
+  
+  headbutt = {
+    tooltip = "Headbutt",
+    imageClip = "100 0 20 20",
+    callback = function()
+      g_game.talk("!headbutt")
+    end
+  }
+
+PASSO 5: Reiniciar o cliente
+  • Feche e abra o cliente
+  • O novo ícone aparecerá
+
+RESULTADO:
+  Um novo ícone foi adicionado com sucesso!
+
+================================================================================
+DICAS IMPORTANTES
+================================================================================
+
+1. SEMPRE mantenha a altura em 20 pixels
+   Não altere a altura da imagem
+
+2. SEMPRE use PNG
+   Não use JPG (perde qualidade)
+
+3. SEMPRE certifique-se de que cada ícone tem 20×20 pixels
+   Use a régua ou zoom para verificar
+
+4. SEMPRE reinicie o cliente após editar
+   As mudanças não aparecem sem reiniciar
+
+5. SEMPRE faça backup da imagem original
+   Antes de editar, salve uma cópia
+
+6. SEMPRE verifique o tamanho final
+   Deve ser 20 × (número de ícones × 20)
+   
+   Exemplos:
+   • 5 ícones: 20×100
+   • 6 ícones: 20×120
+   • 7 ícones: 20×140
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+PROBLEMA: Os ícones não aparecem após editar
+SOLUÇÃO:
+  1. Verifique se salvou a imagem como PNG
+  2. Verifique se o tamanho está correto (20×100)
+  3. Verifique se cada ícone tem 20×20 pixels
+  4. Reinicie o cliente
+
+PROBLEMA: Os ícones aparecem cortados ou distorcidos
+SOLUÇÃO:
+  1. Verifique se a altura é exatamente 20 pixels
+  2. Verifique se cada ícone tem exatamente 20×20 pixels
+  3. Redimensione se necessário
+  4. Salve novamente
+
+PROBLEMA: Novo ícone não aparece após adicionar
+SOLUÇÃO:
+  1. Verifique se aumentou a largura da imagem
+  2. Verifique se adicionou o novo ícone em pokebar.lua
+  3. Verifique se o imageClip está correto
+  4. Reinicie o cliente
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.0.0
+Data: 14/03/2026
+Status: ✅ Guia prático completo
+
+================================================================================

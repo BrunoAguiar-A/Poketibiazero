@@ -1,0 +1,361 @@
+================================================================================
+                    ESTRUTURA DO MÓDULO GAME_DAILY_REWARDS
+                              Versão 1.1.0
+================================================================================
+
+📦 DIRETÓRIO RAIZ
+================================================================================
+
+CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/
+│
+├─ 📄 ARQUIVOS DE CÓDIGO (4 arquivos)
+│  │
+│  ├─ game_daily_rewards.lua
+│  │  └─ Lógica principal do módulo
+│  │     • Inicialização e terminação
+│  │     • Gerenciamento de interface
+│  │     • Comunicação com servidor
+│  │     • Atualização de dados
+│  │     • Timer em tempo real
+│  │     • ~400 linhas de código
+│  │
+│  ├─ game_daily_rewards.otui
+│  │  └─ Definição da interface visual
+│  │     • Estrutura da janela principal
+│  │     • Layout dos widgets de recompensa
+│  │     • Posicionamento de elementos
+│  │     • Botões e labels
+│  │     • ~150 linhas de OTUI
+│  │
+│  ├─ game_daily_rewards.otmod
+│  │  └─ Configuração do módulo
+│  │     • Nome do módulo
+│  │     • Descrição
+│  │     • Autor
+│  │     • Autoload
+│  │     • Prioridade
+│  │
+│  └─ styles.otui
+│     └─ Estilos adicionais
+│        • Estados visuais
+│        • Cores customizáveis
+│        • Efeitos visuais
+│
+├─ 📚 DOCUMENTAÇÃO (8 arquivos)
+│  │
+│  ├─ INDEX.md
+│  │  └─ Índice de documentação
+│  │     • Guia de navegação
+│  │     • Busca rápida por tópico
+│  │     • Roteiros de aprendizado
+│  │     • FAQ rápido
+│  │
+│  ├─ README.md
+│  │  └─ Visão geral do módulo
+│  │     • Instalação
+│  │     • Como usar
+│  │     • Configuração
+│  │     • Features
+│  │     • Personalização
+│  │
+│  ├─ QUICK_START.md
+│  │  └─ Início rápido
+│  │     • Verificação de instalação
+│  │     • Teste de funcionalidades
+│  │     • Integração básica
+│  │     • Troubleshooting rápido
+│  │
+│  ├─ SERVER_INTEGRATION.md
+│  │  └─ Guia de integração com servidor
+│  │     • Protocolo de comunicação
+│  │     • Exemplos de código
+│  │     • Integração com BD
+│  │     • Testes
+│  │
+│  ├─ USAGE_EXAMPLES.md
+│  │  └─ Exemplos práticos
+│  │     • Exemplos básicos
+│  │     • Exemplos avançados
+│  │     • Integração com módulos
+│  │     • Customização
+│  │     • Debug
+│  │
+│  ├─ CHANGELOG.md
+│  │  └─ Histórico de versões
+│  │     • Versão 1.1.0
+│  │     • Versão 1.0.0
+│  │     • Roadmap futuro
+│  │
+│  ├─ SUMMARY.txt
+│  │  └─ Sumário visual
+│  │     • Estrutura
+│  │     • Funcionalidades
+│  │     • Imagens
+│  │     • Estatísticas
+│  │
+│  └─ STRUCTURE.txt
+│     └─ Este arquivo
+│        • Mapa visual da estrutura
+│        • Descrição de cada arquivo
+│        • Tamanhos e conteúdo
+│
+└─ 🖼️  IMAGENS (4 arquivos - 179.6 KB)
+   │
+   ├─ banner.png (82.7 KB)
+   │  └─ Banner do header
+   │     • Origem: PSTORY/data/images/game/rewards/
+   │     • Uso: Decoração no topo da janela
+   │
+   ├─ corki.png (11.5 KB)
+   │  └─ Personagem Corki
+   │     • Origem: PSTORY/data/images/game/daily/
+   │     • Uso: Elemento decorativo
+   │
+   ├─ gift.png (289 B)
+   │  └─ Ícone de presente
+   │     • Origem: PSTORY/data/images/game/daily/
+   │     • Uso: Ícone do módulo
+   │
+   └─ sonia.png (85.1 KB)
+      └─ Personagem Sonia
+         • Origem: PSTORY/data/images/game/daily/
+         • Uso: Elemento decorativo
+
+================================================================================
+📊 ESTATÍSTICAS
+================================================================================
+
+Arquivos por Tipo:
+  • Código Lua: 1 arquivo (11.3 KB)
+  • Interface OTUI: 2 arquivos (4.4 KB)
+  • Configuração: 1 arquivo (288 B)
+  • Documentação: 8 arquivos (~36 KB)
+  • Imagens: 4 arquivos (179.6 KB)
+  ─────────────────────────────────
+  TOTAL: 16 arquivos (231.6 KB)
+
+Linhas de Código:
+  • Lua: ~400 linhas
+  • OTUI: ~150 linhas
+  • Documentação: ~1500 linhas
+  ─────────────────────────────────
+  TOTAL: ~2050 linhas
+
+Tamanho por Categoria:
+  • Código: 15.9 KB (7%)
+  • Documentação: 36 KB (16%)
+  • Imagens: 179.6 KB (77%)
+  ─────────────────────────────────
+  TOTAL: 231.6 KB (100%)
+
+================================================================================
+🔄 FLUXO DE FUNCIONAMENTO
+================================================================================
+
+1. INICIALIZAÇÃO
+   ├─ init() é chamado
+   ├─ Interface é carregada (game_daily_rewards.otui)
+   ├─ Widgets de recompensa são criados
+   ├─ Eventos do jogo são conectados
+   └─ Protocolo estendido é registrado
+
+2. QUANDO O JOGADOR CONECTA
+   ├─ onGameStart() é chamado
+   ├─ requestRewardsData() é executado
+   ├─ Servidor responde com dados
+   └─ updateRewardsDisplay() atualiza interface
+
+3. QUANDO A JANELA É ABERTA
+   ├─ show() é chamado
+   ├─ startTimerUpdate() inicia timer
+   ├─ Timer atualiza a cada 1 segundo
+   └─ updateInfoText() mostra tempo restante
+
+4. QUANDO JOGADOR CLICA EM CLAIM
+   ├─ claimReward() é chamado
+   ├─ Requisição é enviada ao servidor
+   ├─ Servidor valida e envia recompensa
+   ├─ onReceiveRewards() processa resposta
+   └─ updateRewardsDisplay() atualiza interface
+
+5. QUANDO A JANELA É FECHADA
+   ├─ hide() é chamado
+   ├─ Timer é parado
+   └─ Memória é liberada
+
+================================================================================
+📡 PROTOCOLO DE COMUNICAÇÃO
+================================================================================
+
+OPCODE: 2
+
+REQUISIÇÕES (Cliente → Servidor):
+  • {"action": "refresh"}  - Solicita atualização
+  • {"action": "claim"}    - Tenta coletar recompensa
+
+RESPOSTAS (Servidor → Cliente):
+  {
+    "rewards": {...},      - Dicionário de recompensas
+    "currentDay": 5,       - Dia atual (1-21)
+    "canClaim": true,      - Se pode coletar hoje
+    "nextClaim": 1234567890, - Timestamp da próxima
+    "autoShow": false      - Mostrar automaticamente
+  }
+
+================================================================================
+🎨 ESTRUTURA VISUAL
+================================================================================
+
+JANELA PRINCIPAL (600x480)
+├─ HEADER (60px)
+│  ├─ Banner Image (60x60)
+│  └─ Título "RECOMPENSAS DIARIAS - 21 DIAS"
+│
+├─ PAINEL DE RECOMPENSAS (580x240)
+│  └─ Grid 7x3 de Widgets (72x72 cada)
+│     ├─ DailyRewardBox 1
+│     ├─ DailyRewardBox 2
+│     ├─ ...
+│     └─ DailyRewardBox 21
+│
+├─ INFORMAÇÕES (50px)
+│  ├─ Texto de Status
+│  └─ Descrição
+│
+└─ BOTÕES (35px)
+   ├─ Botão CLAIM REWARD
+   └─ Botão CLOSE
+
+WIDGET DE RECOMPENSA (72x72)
+├─ Badge do Dia (24x16)
+│  └─ Número do dia
+├─ Ícone do Item (40x40)
+│  └─ Item visual
+├─ Label de Status
+│  └─ OK / ! / ... / ---
+└─ Efeito de Brilho (opcional)
+
+================================================================================
+🔧 DEPENDÊNCIAS
+================================================================================
+
+Módulos do Cliente:
+  • modules.game_interface - Para carregar UI
+  • modules.game_textmessage - Para mensagens
+  • modules.client_topmenu - Para botão (opcional)
+
+Protocolo:
+  • ProtocolGame - Para comunicação estendida
+  • JSON - Para serialização de dados
+
+Sistema:
+  • g_game - Para eventos do jogo
+  • g_ui - Para criar widgets
+  • g_logger - Para logging
+  • g_sounds - Para efeitos sonoros (opcional)
+
+================================================================================
+📝 FUNÇÕES PRINCIPAIS
+================================================================================
+
+init()
+  └─ Inicializa o módulo
+
+terminate()
+  └─ Finaliza o módulo
+
+show()
+  └─ Mostra a janela
+
+hide()
+  └─ Oculta a janela
+
+toggleWindow()
+  └─ Alterna visibilidade
+
+claimReward()
+  └─ Coleta recompensa
+
+requestRewardsData()
+  └─ Solicita dados ao servidor
+
+onReceiveRewards(protocol, opcode, buffer)
+  └─ Processa resposta do servidor
+
+updateRewardsDisplay()
+  └─ Atualiza interface visual
+
+updateInfoText()
+  └─ Atualiza texto informativo
+
+createRewardWidgets()
+  └─ Cria widgets de recompensa
+
+startTimerUpdate()
+  └─ Inicia timer de atualização
+
+onGameStart()
+  └─ Evento ao conectar
+
+onGameEnd()
+  └─ Evento ao desconectar
+
+================================================================================
+🎯 FLUXO DE DADOS
+================================================================================
+
+CLIENTE                          SERVIDOR
+   │                               │
+   ├─ requestRewardsData() ───────→ │
+   │                               │
+   │ ← onReceiveRewards() ─────────┤
+   │                               │
+   ├─ updateRewardsDisplay() ──────┤
+   │                               │
+   │ [Jogador clica em CLAIM]      │
+   │                               │
+   ├─ claimReward() ───────────────→ │
+   │                               │
+   │ ← onReceiveRewards() ─────────┤
+   │                               │
+   ├─ updateRewardsDisplay() ──────┤
+   │                               │
+   └─ [Recompensa adicionada] ─────┤
+
+================================================================================
+✅ CHECKLIST DE ARQUIVOS
+================================================================================
+
+Código:
+  [✅] game_daily_rewards.lua
+  [✅] game_daily_rewards.otui
+  [✅] game_daily_rewards.otmod
+  [✅] styles.otui
+
+Documentação:
+  [✅] INDEX.md
+  [✅] README.md
+  [✅] QUICK_START.md
+  [✅] SERVER_INTEGRATION.md
+  [✅] USAGE_EXAMPLES.md
+  [✅] CHANGELOG.md
+  [✅] SUMMARY.txt
+  [✅] STRUCTURE.txt
+
+Imagens:
+  [✅] banner.png
+  [✅] corki.png
+  [✅] gift.png
+  [✅] sonia.png
+
+================================================================================
+📞 INFORMAÇÕES
+================================================================================
+
+Versão: 1.1.0
+Data: 13/03/2026
+Autor: Nordemon Team
+Website: https://nordemon.online
+Status: ✅ Pronto para uso
+
+================================================================================

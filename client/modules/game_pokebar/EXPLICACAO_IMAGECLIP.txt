@@ -1,0 +1,272 @@
+================================================================================
+                    EXPLICAÇÃO DETALHADA - imageClip
+================================================================================
+
+Vou explicar exatamente como funciona o imageClip com a imagem 20x100.
+
+================================================================================
+ENTENDENDO O imageClip
+================================================================================
+
+O imageClip define qual PARTE da imagem será exibida.
+
+Formato: imageClip = "X Y LARGURA ALTURA"
+
+Onde:
+  • X = posição horizontal (pixels da esquerda)
+  • Y = posição vertical (pixels do topo)
+  • LARGURA = quantos pixels de largura pegar
+  • ALTURA = quantos pixels de altura pegar
+
+================================================================================
+EXEMPLO PRÁTICO: imageClip = "20 0 20 20"
+================================================================================
+
+Vamos quebrar isso:
+
+  imageClip = "20 0 20 20"
+              │  │ │  │
+              │  │ │  └─ ALTURA: 20 pixels
+              │  │ └──── LARGURA: 20 pixels
+              │  └─────── Y: 0 (começa no topo)
+              └────────── X: 20 (começa 20 pixels da esquerda)
+
+SIGNIFICADO:
+  "Pegue um retângulo de 20x20 pixels, começando na posição (20, 0)"
+
+VISUALMENTE:
+  ┌─────────────────────────────────────────────────────────┐
+  │ Imagem: 100 pixels de largura x 20 pixels de altura    │
+  │                                                         │
+  │ ┌──────────┬──────────┬──────────┬──────────┬──────────┐│
+  │ │ 0-20     │ 20-40    │ 40-60    │ 60-80    │ 80-100   ││
+  │ │ (0,0)    │ (20,0)   │ (40,0)   │ (60,0)   │ (80,0)   ││
+  │ │          │ ← AQUI   │          │          │          ││
+  │ │          │ (20,0)   │          │          │          ││
+  │ │          │ 20x20    │          │          │          ││
+  │ └──────────┴──────────┴──────────┴──────────┴──────────┘│
+  │                                                         │
+  └─────────────────────────────────────────────────────────┘
+
+O imageClip "20 0 20 20" pega o retângulo DESTACADO acima.
+
+================================================================================
+ESTRUTURA DA IMAGEM 20x100
+================================================================================
+
+A imagem tem 100 pixels de largura e 20 pixels de altura.
+
+Como está organizada:
+  • 5 ícones de 20x20 pixels cada um
+  • Dispostos HORIZONTALMENTE em uma única linha
+
+LAYOUT:
+
+  ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+  │ ÍCONE 1  │ ÍCONE 2  │ ÍCONE 3  │ ÍCONE 4  │ ÍCONE 5  │
+  │ (0,0)    │ (20,0)   │ (40,0)   │ (60,0)   │ (80,0)   │
+  │ 20x20    │ 20x20    │ 20x20    │ 20x20    │ 20x20    │
+  └──────────┴──────────┴──────────┴──────────┴──────────┘
+
+  Altura total: 20 pixels
+  Largura total: 100 pixels (5 ícones × 20 pixels)
+
+================================================================================
+COORDENADAS DE CADA ÍCONE
+================================================================================
+
+ÍCONE 1 (FLY):
+  imageClip = "0 0 20 20"
+  
+  Explicação:
+  • X = 0 (começa no pixel 0 da esquerda)
+  • Y = 0 (começa no pixel 0 do topo)
+  • LARGURA = 20 (pega 20 pixels de largura)
+  • ALTURA = 20 (pega 20 pixels de altura)
+  
+  Resultado: Pega do pixel 0 até 20 na horizontal, 0 até 20 na vertical
+
+ÍCONE 2 (TELEPORT):
+  imageClip = "20 0 20 20"
+  
+  Explicação:
+  • X = 20 (começa no pixel 20 da esquerda)
+  • Y = 0 (começa no pixel 0 do topo)
+  • LARGURA = 20 (pega 20 pixels de largura)
+  • ALTURA = 20 (pega 20 pixels de altura)
+  
+  Resultado: Pega do pixel 20 até 40 na horizontal, 0 até 20 na vertical
+
+ÍCONE 3 (CUT):
+  imageClip = "40 0 20 20"
+  
+  Explicação:
+  • X = 40 (começa no pixel 40 da esquerda)
+  • Y = 0 (começa no pixel 0 do topo)
+  • LARGURA = 20 (pega 20 pixels de largura)
+  • ALTURA = 20 (pega 20 pixels de altura)
+  
+  Resultado: Pega do pixel 40 até 60 na horizontal, 0 até 20 na vertical
+
+ÍCONE 4 (SURF):
+  imageClip = "60 0 20 20"
+  
+  Explicação:
+  • X = 60 (começa no pixel 60 da esquerda)
+  • Y = 0 (começa no pixel 0 do topo)
+  • LARGURA = 20 (pega 20 pixels de largura)
+  • ALTURA = 20 (pega 20 pixels de altura)
+  
+  Resultado: Pega do pixel 60 até 80 na horizontal, 0 até 20 na vertical
+
+ÍCONE 5 (DIG):
+  imageClip = "80 0 20 20"
+  
+  Explicação:
+  • X = 80 (começa no pixel 80 da esquerda)
+  • Y = 0 (começa no pixel 0 do topo)
+  • LARGURA = 20 (pega 20 pixels de largura)
+  • ALTURA = 20 (pega 20 pixels de altura)
+  
+  Resultado: Pega do pixel 80 até 100 na horizontal, 0 até 20 na vertical
+
+================================================================================
+PADRÃO PARA IMAGEM 20x100
+================================================================================
+
+Como a imagem tem 100 pixels de largura e cada ícone tem 20 pixels:
+
+Número de ícones: 100 ÷ 20 = 5 ícones
+
+Coordenadas:
+  Ícone 1: X = 0   → imageClip = "0 0 20 20"
+  Ícone 2: X = 20  → imageClip = "20 0 20 20"
+  Ícone 3: X = 40  → imageClip = "40 0 20 20"
+  Ícone 4: X = 60  → imageClip = "60 0 20 20"
+  Ícone 5: X = 80  → imageClip = "80 0 20 20"
+
+PADRÃO:
+  • Y é SEMPRE 0 (porque há apenas 1 linha)
+  • X aumenta de 20 em 20 (0, 20, 40, 60, 80)
+  • LARGURA é SEMPRE 20
+  • ALTURA é SEMPRE 20
+
+================================================================================
+FÓRMULA PARA CALCULAR X
+================================================================================
+
+Para uma imagem 20x100 com ícones de 20x20:
+
+X = (número do ícone - 1) × 20
+
+Exemplos:
+  Ícone 1: X = (1 - 1) × 20 = 0 × 20 = 0
+  Ícone 2: X = (2 - 1) × 20 = 1 × 20 = 20
+  Ícone 3: X = (3 - 1) × 20 = 2 × 20 = 40
+  Ícone 4: X = (4 - 1) × 20 = 3 × 20 = 60
+  Ícone 5: X = (5 - 1) × 20 = 4 × 20 = 80
+
+================================================================================
+VISUALIZAÇÃO COM NÚMEROS
+================================================================================
+
+Imagem 20x100 com marcações de pixels:
+
+  0    20   40   60   80   100
+  ↓    ↓    ↓    ↓    ↓    ↓
+  ┌────┬────┬────┬────┬────┐
+  │ 1  │ 2  │ 3  │ 4  │ 5  │ ← Altura: 20 pixels
+  └────┴────┴────┴────┴────┘
+  ↑                        ↑
+  Pixel 0                  Pixel 100
+
+Cada ícone:
+  • Começa em X = 0, 20, 40, 60, 80
+  • Começa em Y = 0 (sempre)
+  • Tem 20 pixels de largura
+  • Tem 20 pixels de altura
+
+================================================================================
+CÓDIGO pokebar.lua
+================================================================================
+
+local abilities = {
+  fly = {
+    tooltip = "Fly",
+    imageClip = "0 0 20 20",      ← Ícone 1 (pixel 0-20)
+    callback = function() ... end
+  },
+  teleport = {
+    tooltip = "Teleport",
+    imageClip = "20 0 20 20",     ← Ícone 2 (pixel 20-40)
+    callback = function() ... end
+  },
+  cut = {
+    tooltip = "Cut",
+    imageClip = "40 0 20 20",     ← Ícone 3 (pixel 40-60)
+    callback = function() ... end
+  },
+  surf = {
+    tooltip = "Surf",
+    imageClip = "60 0 20 20",     ← Ícone 4 (pixel 60-80)
+    callback = function() ... end
+  },
+  dig = {
+    tooltip = "Dig",
+    imageClip = "80 0 20 20",     ← Ícone 5 (pixel 80-100)
+    callback = function() ... end
+  }
+}
+
+================================================================================
+COMO ADICIONAR MAIS ÍCONES
+================================================================================
+
+Se você quer adicionar mais ícones, precisa:
+
+1. Aumentar a largura da imagem
+   Exemplo: De 100 para 120 pixels (para 6 ícones)
+
+2. Adicionar o novo ícone na imagem
+   Posição: Pixel 100-120
+
+3. Adicionar a nova habilidade em pokebar.lua
+   imageClip = "100 0 20 20"
+
+Exemplo:
+  novaHabilidade = {
+    tooltip = "Nova Habilidade",
+    imageClip = "100 0 20 20",    ← Novo ícone (pixel 100-120)
+    callback = function()
+      g_game.talk("!comando")
+    end
+  }
+
+================================================================================
+RESUMO
+================================================================================
+
+Para uma imagem 20x100 com ícones de 20x20:
+
+• Há 5 ícones dispostos HORIZONTALMENTE
+• Y é SEMPRE 0
+• X aumenta de 20 em 20: 0, 20, 40, 60, 80
+• Fórmula: X = (número do ícone - 1) × 20
+• imageClip = "X 0 20 20"
+
+Coordenadas:
+  Ícone 1: "0 0 20 20"
+  Ícone 2: "20 0 20 20"
+  Ícone 3: "40 0 20 20"
+  Ícone 4: "60 0 20 20"
+  Ícone 5: "80 0 20 20"
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.0.0
+Data: 14/03/2026
+Status: ✅ Explicação completa do imageClip
+
+================================================================================

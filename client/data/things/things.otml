@@ -1,0 +1,9 @@
+group-tags:
+  //Tutor
+  3: "/data/images/game/tags/tutor_tag"
+
+  //Gamemaster
+  4: "/data/images/game/tags/gm_tag"
+
+  //Administrator
+  5: "/data/images/game/tags/adm_tag"

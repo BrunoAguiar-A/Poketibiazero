@@ -1,0 +1,145 @@
+================================================================================
+                    RESUMO DAS MUDANÇAS REALIZADAS
+================================================================================
+
+ARQUIVO 1: game_daily_rewards.otui
+================================================================================
+
+ANTES:
+  UIItem
+    id: itemIcon
+    anchors.centerIn: parent
+    margin-top: 2
+    size: 40 40
+    virtual: true          ← PROBLEMA: virtual impede renderização
+
+DEPOIS:
+  UIItem
+    id: itemIcon
+    anchors.centerIn: parent
+    margin-top: 2
+    size: 40 40            ← CORRIGIDO: removido "virtual: true"
+
+================================================================================
+
+ARQUIVO 2: game_daily_rewards.lua
+================================================================================
+
+MUDANÇA 1: Função show()
+────────────────────────
+
+ANTES:
+  function show()
+      if not mainWindow then
+          print(">> AVISO: Janela não foi inicializada ainda")
+          return
+      end
+      
+      mainWindow:show()
+      mainWindow:raise()
+      mainWindow:focus()
+      startTimerUpdate()
+  end
+
+DEPOIS:
+  function show()
+      if not mainWindow then
+          print(">> AVISO: Janela não foi inicializada ainda")
+          return
+      end
+      
+      mainWindow:show()
+      mainWindow:raise()
+      mainWindow:focus()
+      updateRewardsDisplay()    ← ADICIONADO: atualiza itens ao abrir
+      startTimerUpdate()
+  end
+
+────────────────────────────────────────────────────────────────────────────
+
+MUDANÇA 2: Função createRewardWidgets()
+────────────────────────────────────────
+
+ANTES:
+  function createRewardWidgets()
+      local rewardsPanel = mainWindow:getChildById('rewardsPanel')
+      if not rewardsPanel then
+          return
+      end
+      
+      rewardsPanel:destroyChildren()
+      rewardWidgets = {}
+      
+      for dayIndex = 1, 21 do
+          local widget = g_ui.createWidget('DailyRewardBox', rewardsPanel)
+          
+          local dayLabel = widget:getChildById('dayNumber')
+          if dayLabel then
+              dayLabel:setText(tostring(dayIndex))
+          end
+          
+          widget:setOn(false)
+          widget.day = dayIndex
+          widget.claimed = false
+          widget.canClaim = false
+          
+          rewardWidgets[dayIndex] = widget
+      end
+  end
+
+DEPOIS:
+  function createRewardWidgets()
+      local rewardsPanel = mainWindow:getChildById('rewardsPanel')
+      if not rewardsPanel then
+          return
+      end
+      
+      rewardsPanel:destroyChildren()
+      rewardWidgets = {}
+      
+      for dayIndex = 1, 21 do
+          local widget = g_ui.createWidget('DailyRewardBox', rewardsPanel)
+          
+          local dayLabel = widget:getChildById('dayNumber')
+          if dayLabel then
+              dayLabel:setText(tostring(dayIndex))
+          end
+          
+          widget:setOn(false)
+          widget.day = dayIndex
+          widget.claimed = false
+          widget.canClaim = false
+          
+          rewardWidgets[dayIndex] = widget
+      end
+      
+      updateRewardsDisplay()    ← ADICIONADO: atualiza itens ao criar widgets
+  end
+
+────────────────────────────────────────────────────────────────────────────
+
+MUDANÇA 3: Tabela rewardsData
+──────────────────────────────
+
+ANTES (IDs inválidos):
+  [1] = {clientId = 2152, count = 1, name = "Hundred Dollar"},
+  [2] = {clientId = 2160, count = 1, name = "Ten Thousand Dollar"},
+  [3] = {clientId = 14435, count = 1, name = "Item 1"},
+  ... (IDs que não existem no jogo)
+
+DEPOIS (IDs válidos):
+  [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+  [2] = {clientId = 26728, count = 1, name = "Fire Stone"},
+  [3] = {clientId = 26736, count = 1, name = "Water Stone"},
+  ... (IDs que existem e funcionam no jogo)
+
+================================================================================
+RESULTADO FINAL
+================================================================================
+
+✅ Itens agora aparecem corretamente na interface
+✅ Todos os 21 dias mostram seus respectivos itens
+✅ Os ícones são renderizados corretamente
+✅ A interface está totalmente funcional
+
+================================================================================

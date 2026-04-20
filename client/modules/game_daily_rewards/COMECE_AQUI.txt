@@ -1,0 +1,101 @@
+================================================================================
+                    DAILY REWARDS MODULE - COMECE AQUI
+================================================================================
+
+✅ MÓDULO ESTÁ PRONTO PARA USO
+
+================================================================================
+PASSO 1: REINICIAR O CLIENTE
+================================================================================
+
+1. Feche o cliente completamente
+2. Aguarde 5 segundos
+3. Abra o cliente novamente
+4. Conecte ao servidor
+
+================================================================================
+PASSO 2: VERIFICAR SE CARREGOU
+================================================================================
+
+Abra o console (Ctrl+Shift+C ou F12) e procure por:
+
+>> Módulo de Daily Rewards carregado com sucesso!
+>> Botão Daily Rewards adicionado ao topmenu
+
+Se vir estas mensagens, o módulo foi carregado corretamente.
+
+================================================================================
+PASSO 3: ABRIR O MÓDULO
+================================================================================
+
+Opção A: Clique no ícone de presente (gift) no topo da tela
+
+Opção B: Execute no console:
+  modules.game_daily_rewards.show()
+
+================================================================================
+PASSO 4: TESTAR A FUNCIONALIDADE
+================================================================================
+
+Você verá:
+- Título: "RECOMPENSAS DIARIAS - 21 DIAS"
+- 21 caixas de recompensas em grid 7x3
+- Botões: "CLAIM REWARD" e "CLOSE"
+
+Estados das caixas:
+- Verde: Já coletado
+- Amarelo: Disponível para coletar
+- Vermelho: Indisponível (aguardando 24h)
+- Cinza: Bloqueado (dias futuros)
+
+================================================================================
+PASSO 5: COLETAR RECOMPENSA
+================================================================================
+
+1. Clique no botão "CLAIM REWARD"
+2. O servidor processará a recompensa
+3. Você receberá o item no seu inventário
+
+================================================================================
+PRÓXIMOS PASSOS
+================================================================================
+
+Para EDITAR os itens de recompensa:
+  → Leia: LISTA_ITENS_ATUAL.txt
+
+Para INTEGRAR com o servidor:
+  → Leia: SERVER_INTEGRATION.md
+
+Para TROUBLESHOOTING:
+  → Leia: SETUP_FINAL.txt
+
+================================================================================
+ARQUIVOS IMPORTANTES
+================================================================================
+
+game_daily_rewards.lua      - Lógica principal (EDITE AQUI para alterar itens)
+game_daily_rewards.otui     - Interface gráfica
+game_daily_rewards.otmod    - Configuração do módulo
+images/gift.png             - Ícone do botão
+
+================================================================================
+CONSOLE COMMANDS
+================================================================================
+
+Abrir:          modules.game_daily_rewards.show()
+Fechar:         modules.game_daily_rewards.hide()
+Coletar:        modules.game_daily_rewards.claimReward()
+Atualizar:      modules.game_daily_rewards.requestRewardsData()
+
+================================================================================
+SUPORTE
+================================================================================
+
+Se tiver problemas:
+
+1. Verifique o console para mensagens de erro
+2. Leia SETUP_FINAL.txt para troubleshooting
+3. Reinicie o cliente
+4. Verifique se todos os arquivos existem
+
+================================================================================

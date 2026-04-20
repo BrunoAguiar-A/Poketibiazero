@@ -1,0 +1,94 @@
+================================================================================
+                    ✅ LAYOUT AJUSTADO - TEXTOS REPOSICIONADOS
+================================================================================
+
+O LAYOUT FOI AJUSTADO COM SUCESSO!
+
+================================================================================
+O QUE FOI MUDADO
+================================================================================
+
+Arquivo: game_daily_rewards.otui
+
+ANTES:
+  MainWindow
+    size: 560 420
+
+DEPOIS:
+  MainWindow
+    size: 560 480
+
+O QUE MUDOU:
+  • Altura da janela: 420 → 480 pixels
+  • Resultado: Mais espaço para os textos ficarem acima dos botões
+
+================================================================================
+RESULTADO VISUAL
+================================================================================
+
+ANTES:
+  ┌─────────────────────────────────────┐
+  │ RECOMPENSAS DIARIAS - 21 DIAS       │
+  │                                     │
+  │ [Grid 7x3 com 21 itens]             │
+  │                                     │
+  │ Próxima recompensa em 24h           │ ← Abaixo dos itens
+  │ Entre todos os dias...              │ ← Abaixo dos itens
+  │                                     │
+  │ [CLOSE] [CLAIM REWARD]              │ ← Botões
+  └─────────────────────────────────────┘
+
+DEPOIS:
+  ┌─────────────────────────────────────┐
+  │ RECOMPENSAS DIARIAS - 21 DIAS       │
+  │                                     │
+  │ [Grid 7x3 com 21 itens]             │
+  │                                     │
+  │ Próxima recompensa em 24h           │ ← Acima dos botões
+  │ Entre todos os dias...              │ ← Acima dos botões
+  │                                     │
+  │ [CLOSE] [CLAIM REWARD]              │ ← Botões
+  └─────────────────────────────────────┘
+
+================================================================================
+COMO TESTAR
+================================================================================
+
+1. Reinicie o cliente
+2. Conecte ao servidor
+3. Clique no ícone de presente (gift)
+4. Verifique se os textos estão acima dos botões
+5. Verifique se não há sobreposição de elementos
+
+================================================================================
+DETALHES TÉCNICOS
+================================================================================
+
+Arquivo: CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.otui
+
+Linha: 52 (MainWindow size)
+
+ANTES:
+  size: 560 420
+
+DEPOIS:
+  size: 560 480
+
+Explicação:
+  • 560 = largura da janela (não mudou)
+  • 420 → 480 = altura da janela (aumentou 60 pixels)
+
+Resultado:
+  • Os textos "infoText" e "descText" agora têm espaço suficiente
+  • Os botões ficam na parte inferior com margem adequada
+  • Não há mais sobreposição de elementos
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.6.0
+Data: 14/03/2026
+Status: ✅ Layout ajustado com sucesso!
+
+================================================================================

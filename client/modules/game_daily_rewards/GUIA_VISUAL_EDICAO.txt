@@ -1,0 +1,237 @@
+================================================================================
+                    GUIA VISUAL - COMO EDITAR OS ITENS
+================================================================================
+
+EXEMPLO: Vou mudar o Dia 1 de "Leaf Stone" para "Poção Vermelha"
+
+================================================================================
+PASSO 1: ENCONTRAR O ID DO ITEM
+================================================================================
+
+Você precisa saber o ID do item que quer adicionar.
+Exemplo: Poção Vermelha = ID 12345
+
+================================================================================
+PASSO 2: EDITAR NO CLIENTE
+================================================================================
+
+Arquivo: CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.lua
+
+Procure por:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ local rewardsData = {                                                    │
+│     [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},           │
+│     [2] = {clientId = 26728, count = 1, name = "Fire Stone"},           │
+│     ...                                                                  │
+│ }                                                                        │
+└─────────────────────────────────────────────────────────────────────────┘
+
+Mude para:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ local rewardsData = {                                                    │
+│     [1] = {clientId = 12345, count = 1, name = "Poção Vermelha"},       │
+│     [2] = {clientId = 26728, count = 1, name = "Fire Stone"},           │
+│     ...                                                                  │
+│ }                                                                        │
+└─────────────────────────────────────────────────────────────────────────┘
+
+O QUE MUDOU:
+  • clientId: 26731 → 12345 (novo ID)
+  • name: "Leaf Stone" → "Poção Vermelha" (novo nome)
+  • count: 1 (mantém igual)
+
+================================================================================
+PASSO 3: EDITAR NO SERVIDOR - SEÇÃO "REFRESH"
+================================================================================
+
+Arquivo: SERVER/data/creaturescripts/scripts/extendedopcode.lua
+
+Procure por:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ if data.action == "refresh" then                                        │
+│     local rewardsData = {                                               │
+│         [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},         │
+│         [2] = {itemId = 26728, count = 1, name = "Fire Stone"},         │
+│         ...                                                             │
+│     }                                                                   │
+└─────────────────────────────────────────────────────────────────────────┘
+
+Mude para:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ if data.action == "refresh" then                                        │
+│     local rewardsData = {                                               │
+│         [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"},     │
+│         [2] = {itemId = 26728, count = 1, name = "Fire Stone"},         │
+│         ...                                                             │
+│     }                                                                   │
+└─────────────────────────────────────────────────────────────────────────┘
+
+O QUE MUDOU:
+  • itemId: 26731 → 12345 (novo ID)
+  • name: "Leaf Stone" → "Poção Vermelha" (novo nome)
+  • count: 1 (mantém igual)
+
+================================================================================
+PASSO 4: EDITAR NO SERVIDOR - SEÇÃO "CLAIM" - PARTE 1
+================================================================================
+
+Arquivo: SERVER/data/creaturescripts/scripts/extendedopcode.lua
+
+Procure por:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ elseif data.action == "claim" then                                      │
+│     ...                                                                 │
+│     local rewardsData = {                                               │
+│         [1] = {itemId = 26731, count = 1},                              │
+│         [2] = {itemId = 26728, count = 1},                              │
+│         ...                                                             │
+│     }                                                                   │
+└─────────────────────────────────────────────────────────────────────────┘
+
+Mude para:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ elseif data.action == "claim" then                                      │
+│     ...                                                                 │
+│     local rewardsData = {                                               │
+│         [1] = {itemId = 12345, count = 1},                              │
+│         [2] = {itemId = 26728, count = 1},                              │
+│         ...                                                             │
+│     }                                                                   │
+└─────────────────────────────────────────────────────────────────────────┘
+
+O QUE MUDOU:
+  • itemId: 26731 → 12345 (novo ID)
+  • count: 1 (mantém igual)
+
+================================================================================
+PASSO 5: EDITAR NO SERVIDOR - SEÇÃO "CLAIM" - PARTE 2
+================================================================================
+
+Arquivo: SERVER/data/creaturescripts/scripts/extendedopcode.lua
+
+Procure por:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Recompensa coletada...") │
+│                                                                         │
+│ local rewardsDataResponse = {                                           │
+│     [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},             │
+│     [2] = {itemId = 26728, count = 1, name = "Fire Stone"},             │
+│     ...                                                                 │
+│ }                                                                       │
+└─────────────────────────────────────────────────────────────────────────┘
+
+Mude para:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Recompensa coletada...") │
+│                                                                         │
+│ local rewardsDataResponse = {                                           │
+│     [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"},         │
+│     [2] = {itemId = 26728, count = 1, name = "Fire Stone"},             │
+│     ...                                                                 │
+│ }                                                                       │
+└─────────────────────────────────────────────────────────────────────────┘
+
+O QUE MUDOU:
+  • itemId: 26731 → 12345 (novo ID)
+  • name: "Leaf Stone" → "Poção Vermelha" (novo nome)
+  • count: 1 (mantém igual)
+
+================================================================================
+PASSO 6: SALVAR E REINICIAR
+================================================================================
+
+1. Salve o arquivo do cliente (Ctrl+S)
+2. Salve o arquivo do servidor (Ctrl+S)
+3. Reinicie o servidor
+4. Reinicie o cliente
+5. Conecte ao servidor
+6. Clique no ícone de presente (gift)
+7. Você verá o novo item no Dia 1!
+8. Clique em "CLAIM REWARD"
+9. Verifique se o item NÃO mudou!
+
+================================================================================
+RESUMO DAS MUDANÇAS
+================================================================================
+
+CLIENTE (game_daily_rewards.lua):
+  [1] = {clientId = 26731, count = 1, name = "Leaf Stone"}
+  ↓
+  [1] = {clientId = 12345, count = 1, name = "Poção Vermelha"}
+
+SERVIDOR - refresh (extendedopcode.lua):
+  [1] = {itemId = 26731, count = 1, name = "Leaf Stone"}
+  ↓
+  [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"}
+
+SERVIDOR - claim - Parte 1 (extendedopcode.lua):
+  [1] = {itemId = 26731, count = 1}
+  ↓
+  [1] = {itemId = 12345, count = 1}
+
+SERVIDOR - claim - Parte 2 (extendedopcode.lua):
+  [1] = {itemId = 26731, count = 1, name = "Leaf Stone"}
+  ↓
+  [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"}
+
+================================================================================
+DICAS IMPORTANTES
+================================================================================
+
+1. SEMPRE edite em QUATRO lugares:
+   ✓ Cliente: game_daily_rewards.lua
+   ✓ Servidor: extendedopcode.lua (refresh)
+   ✓ Servidor: extendedopcode.lua (claim - Parte 1)
+   ✓ Servidor: extendedopcode.lua (claim - Parte 2)
+
+2. Os IDs devem ser IGUAIS em todos os lugares
+
+3. Não esqueça de:
+   ✓ Salvar os arquivos
+   ✓ Reiniciar o servidor
+   ✓ Reiniciar o cliente
+
+4. Se algo der errado:
+   ✓ Verifique se o ID é válido
+   ✓ Verifique se não há erros de sintaxe
+   ✓ Verifique se salvou todos os arquivos
+
+5. Após clicar em "CLAIM REWARD":
+   ✓ Os itens NÃO devem mudar
+   ✓ Se mudarem, você esqueceu de editar a Parte 2 do claim
+
+================================================================================
+EXEMPLO COM MÚLTIPLOS ITENS
+================================================================================
+
+Se quiser mudar vários dias:
+
+CLIENTE (game_daily_rewards.lua):
+  [1] = {clientId = 12345, count = 1, name = "Poção Vermelha"},
+  [2] = {clientId = 54321, count = 2, name = "Poção Azul"},
+  [3] = {clientId = 99999, count = 5, name = "Poção Mágica"},
+
+SERVIDOR - refresh (extendedopcode.lua):
+  [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"},
+  [2] = {itemId = 54321, count = 2, name = "Poção Azul"},
+  [3] = {itemId = 99999, count = 5, name = "Poção Mágica"},
+
+SERVIDOR - claim - Parte 1 (extendedopcode.lua):
+  [1] = {itemId = 12345, count = 1},
+  [2] = {itemId = 54321, count = 2},
+  [3] = {itemId = 99999, count = 5},
+
+SERVIDOR - claim - Parte 2 (extendedopcode.lua):
+  [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"},
+  [2] = {itemId = 54321, count = 2, name = "Poção Azul"},
+  [3] = {itemId = 99999, count = 5, name = "Poção Mágica"},
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.4.0
+Data: 14/03/2026
+Status: ✅ Guia visual completo
+
+================================================================================

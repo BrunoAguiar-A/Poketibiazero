@@ -1,0 +1,272 @@
+================================================================================
+                    GUIA PRÁTICO - EDITAR ÍCONES DO POKEBAR
+================================================================================
+
+PASSO A PASSO PARA ALTERAR OS ÍCONES DAS HABILIDADES
+
+================================================================================
+PASSO 1: ENTENDER A ESTRUTURA
+================================================================================
+
+O sistema usa uma imagem chamada "icons.png" que contém todos os ícones.
+
+Arquivo: CLIENT/OTCLIENT NORDEMON/data/images/game/pokebar/icons.png
+
+A imagem é organizada em uma GRADE, onde cada ícone ocupa 20x20 pixels.
+
+Exemplo visual (imagem 40x40 pixels com 4 ícones):
+
+  ┌──────────────┬──────────────┐
+  │              │              │
+  │  FLY         │  TELEPORT    │
+  │  (0,0)       │  (20,0)      │
+  │              │              │
+  ├──────────────┼──────────────┤
+  │              │              │
+  │  CUT         │  SURF        │
+  │  (0,20)      │  (20,20)     │
+  │              │              │
+  └──────────────┴──────────────┘
+
+================================================================================
+PASSO 2: PREPARAR A IMAGEM
+================================================================================
+
+1. Abra a imagem icons.png em um editor de imagens (Photoshop, GIMP, etc)
+
+2. Verifique o tamanho atual da imagem
+   Exemplo: 40x20 pixels (2 ícones em 1 linha)
+
+3. Se precisar adicionar novos ícones:
+   • Aumente o tamanho da imagem
+   • Adicione os novos ícones em posições específicas
+   • Cada ícone deve ter exatamente 20x20 pixels
+
+4. Salve a imagem como PNG
+
+================================================================================
+PASSO 3: DESCOBRIR AS COORDENADAS
+================================================================================
+
+Para cada ícone, você precisa saber sua posição (X, Y) na imagem.
+
+Método 1: Usar um editor de imagens
+  1. Abra a imagem em um editor (GIMP, Photoshop, etc)
+  2. Use a ferramenta de seleção retangular
+  3. Selecione o ícone que quer
+  4. Anote as coordenadas X e Y do canto superior esquerdo
+  5. Anote a largura e altura (sempre 20x20)
+
+Método 2: Calcular manualmente
+  Se os ícones estão em uma grade regular:
+  
+  X = (coluna - 1) * 20
+  Y = (linha - 1) * 20
+  
+  Exemplo:
+  • Linha 1, Coluna 1: X = 0,   Y = 0
+  • Linha 1, Coluna 2: X = 20,  Y = 0
+  • Linha 2, Coluna 1: X = 0,   Y = 20
+  • Linha 2, Coluna 2: X = 20,  Y = 20
+
+================================================================================
+PASSO 4: EDITAR O ARQUIVO pokebar.lua
+================================================================================
+
+Arquivo: CLIENT/OTCLIENT NORDEMON/modules/game_pokebar/pokebar.lua
+
+Localize a tabela "abilities" (linhas 8-60):
+
+  local abilities = {
+    fly = {
+      tooltip = "Fly",
+      imageClip = "0 0 20 20",
+      callback = function()
+        ...
+      end
+    },
+    teleport = {
+      tooltip = "Teleport",
+      imageClip = "20 0 20 20",
+      callback = function()
+        ...
+      end
+    },
+    ...
+  }
+
+Para cada habilidade que quer alterar:
+
+1. Encontre a habilidade na tabela
+2. Altere o valor de "imageClip"
+3. Use o formato: "X Y LARGURA ALTURA"
+
+Exemplo:
+  ANTES:
+    fly = {
+      tooltip = "Fly",
+      imageClip = "0 0 20 20",
+      ...
+    }
+
+  DEPOIS (se o ícone está em 40,0):
+    fly = {
+      tooltip = "Fly",
+      imageClip = "40 0 20 20",
+      ...
+    }
+
+================================================================================
+PASSO 5: ADICIONAR NOVAS HABILIDADES
+================================================================================
+
+Se você quer adicionar uma nova habilidade:
+
+1. Abra pokebar.lua
+2. Localize a tabela "abilities"
+3. Adicione uma nova entrada:
+
+  novaHabilidade = {
+    tooltip = "Nome da Habilidade",
+    imageClip = "X Y 20 20",
+    callback = function()
+      -- Ação quando clicado
+      g_game.talk("!comando")
+    end
+  }
+
+Exemplo:
+  local abilities = {
+    fly = { ... },
+    teleport = { ... },
+    meuComando = {
+      tooltip = "Meu Comando",
+      imageClip = "40 0 20 20",
+      callback = function()
+        g_game.talk("!meucomando")
+      end
+    }
+  }
+
+================================================================================
+PASSO 6: SALVAR E TESTAR
+================================================================================
+
+1. Salve o arquivo pokebar.lua (Ctrl+S)
+2. Reinicie o cliente completamente
+3. Conecte ao servidor
+4. Verifique se os ícones aparecem corretamente
+5. Clique nos ícones para testar se funcionam
+
+================================================================================
+EXEMPLO COMPLETO
+================================================================================
+
+Vou criar um exemplo de como alterar 3 ícones:
+
+SITUAÇÃO:
+  • Tenho uma imagem 60x20 pixels com 3 ícones
+  • Quero alterar os ícones de FLY, TELEPORT e CUT
+
+IMAGEM ATUAL:
+  ┌──────────────┬──────────────┬──────────────┐
+  │              │              │              │
+  │  ÍCONE 1     │  ÍCONE 2     │  ÍCONE 3     │
+  │  (0,0)       │  (20,0)      │  (40,0)      │
+  │              │              │              │
+  └──────────────┴──────────────┴──────────────┘
+
+EDIÇÕES NO pokebar.lua:
+
+  ANTES:
+    fly = {
+      tooltip = "Fly",
+      imageClip = "0 0 20 20",
+      ...
+    },
+    teleport = {
+      tooltip = "Teleport",
+      imageClip = "20 0 20 20",
+      ...
+    },
+    cut = {
+      tooltip = "Cut",
+      imageClip = "0 0 20 20",
+      ...
+    }
+
+  DEPOIS:
+    fly = {
+      tooltip = "Fly",
+      imageClip = "0 0 20 20",    ← Mantém igual
+      ...
+    },
+    teleport = {
+      tooltip = "Teleport",
+      imageClip = "20 0 20 20",   ← Mantém igual
+      ...
+    },
+    cut = {
+      tooltip = "Cut",
+      imageClip = "40 0 20 20",   ← Alterado para 40 0
+      ...
+    }
+
+================================================================================
+DICAS IMPORTANTES
+================================================================================
+
+1. SEMPRE use 20x20 pixels para cada ícone
+   • Não use tamanhos diferentes
+   • Todos os ícones devem ter o mesmo tamanho
+
+2. SEMPRE use múltiplos de 20 para as coordenadas
+   • X deve ser: 0, 20, 40, 60, 80, ...
+   • Y deve ser: 0, 20, 40, 60, 80, ...
+
+3. Não esqueça de salvar a imagem PNG
+   • Use PNG para manter a transparência
+   • Não use JPG (perde qualidade)
+
+4. Reinicie o cliente após editar
+   • As mudanças não aparecem sem reiniciar
+   • Feche completamente e abra novamente
+
+5. Verifique a sintaxe do Lua
+   • Não esqueça as vírgulas entre entradas
+   • Não esqueça as chaves de fechamento
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+PROBLEMA: Os ícones não aparecem
+SOLUÇÃO:
+  1. Verifique se o arquivo icons.png existe
+  2. Verifique se as coordenadas estão corretas
+  3. Verifique se não há erros de sintaxe no pokebar.lua
+  4. Reinicie o cliente
+
+PROBLEMA: Os ícones aparecem em posição errada
+SOLUÇÃO:
+  1. Verifique as coordenadas no imageClip
+  2. Use um editor de imagens para confirmar a posição
+  3. Altere as coordenadas se necessário
+  4. Reinicie o cliente
+
+PROBLEMA: Erro ao carregar o módulo
+SOLUÇÃO:
+  1. Verifique se não há erros de sintaxe no pokebar.lua
+  2. Verifique se todas as vírgulas estão no lugar certo
+  3. Verifique se todas as chaves estão fechadas
+  4. Abra o console para ver a mensagem de erro
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.0.0
+Data: 14/03/2026
+Status: ✅ Guia prático completo
+
+================================================================================

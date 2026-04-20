@@ -1,0 +1,240 @@
+================================================================================
+                    ONDE EDITAR OS ITENS - GUIA COMPLETO
+================================================================================
+
+IMPORTANTE: Os itens devem ser editados em DOIS lugares!
+
+================================================================================
+LOCAL 1: CLIENTE (Exibição dos itens)
+================================================================================
+
+Arquivo:
+  CLIENT/OTCLIENT NORDEMON/modules/game_daily_rewards/game_daily_rewards.lua
+
+Linhas:
+  17-42 (aproximadamente)
+
+Procure por:
+  local rewardsData = {
+
+Estrutura:
+  [DIA] = {clientId = ID, count = QUANTIDADE, name = "NOME"},
+
+Exemplo:
+  [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+  [2] = {clientId = 26728, count = 1, name = "Fire Stone"},
+  ...
+  [21] = {clientId = 2160, count = 10, name = "Ten Thousand Dollar"}
+
+O QUE EDITAR:
+  • clientId: ID do item no cliente (OBRIGATÓRIO)
+  • count: Quantidade do item (OBRIGATÓRIO)
+  • name: Nome descritivo (opcional, apenas para referência)
+
+================================================================================
+LOCAL 2: SERVIDOR (Entrega dos itens)
+================================================================================
+
+Arquivo:
+  SERVER/data/creaturescripts/scripts/extendedopcode.lua
+
+LOCAL 2A: Seção "refresh" (envio de dados ao cliente)
+────────────────────────────────────────────────────
+
+Linhas:
+  261-290 (aproximadamente)
+
+Procure por:
+  if data.action == "refresh" then
+      local rewardsData = {
+
+Estrutura:
+  [DIA] = {itemId = ID, count = QUANTIDADE, name = "NOME"},
+
+Exemplo:
+  [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},
+  [2] = {itemId = 26728, count = 1, name = "Fire Stone"},
+  ...
+  [21] = {itemId = 2160, count = 10, name = "Ten Thousand Dollar"}
+
+O QUE EDITAR:
+  • itemId: ID do item no servidor (OBRIGATÓRIO)
+  • count: Quantidade do item (OBRIGATÓRIO)
+  • name: Nome descritivo (opcional, apenas para referência)
+
+────────────────────────────────────────────────────
+
+LOCAL 2B: Seção "claim" - Parte 1 (entrega do item)
+────────────────────────────────────────────────────
+
+Linhas:
+  318-345 (aproximadamente)
+
+Procure por:
+  elseif data.action == "claim" then
+      ...
+      local rewardsData = {
+
+Estrutura:
+  [DIA] = {itemId = ID, count = QUANTIDADE},
+
+Exemplo:
+  [1] = {itemId = 26731, count = 1},
+  [2] = {itemId = 26728, count = 1},
+  ...
+  [21] = {itemId = 2160, count = 10}
+
+O QUE EDITAR:
+  • itemId: ID do item no servidor (OBRIGATÓRIO)
+  • count: Quantidade do item (OBRIGATÓRIO)
+
+────────────────────────────────────────────────────
+
+LOCAL 2C: Seção "claim" - Parte 2 (resposta após claim)
+────────────────────────────────────────────────────
+
+Linhas:
+  375-415 (aproximadamente)
+
+Procure por:
+  player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Recompensa coletada com sucesso!")
+  
+  -- Enviar dados atualizados
+  local rewardsDataResponse = {
+
+Estrutura:
+  [DIA] = {itemId = ID, count = QUANTIDADE, name = "NOME"},
+
+Exemplo:
+  [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},
+  [2] = {itemId = 26728, count = 1, name = "Fire Stone"},
+  ...
+  [21] = {itemId = 2160, count = 10, name = "Ten Thousand Dollar"}
+
+O QUE EDITAR:
+  • itemId: ID do item no servidor (OBRIGATÓRIO)
+  • count: Quantidade do item (OBRIGATÓRIO)
+  • name: Nome descritivo (opcional, apenas para referência)
+
+================================================================================
+COMO EDITAR CORRETAMENTE
+================================================================================
+
+PASSO 1: Decidir qual item quer em qual dia
+  Exemplo: Dia 1 = Leaf Stone
+
+PASSO 2: Encontrar o ID do item
+  • No cliente: clientId (ex: 26731)
+  • No servidor: itemId (ex: 26731)
+
+PASSO 3: Editar no CLIENTE
+  Arquivo: game_daily_rewards.lua
+  Linha: [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+
+PASSO 4: Editar no SERVIDOR (3 lugares!)
+  Arquivo: extendedopcode.lua
+  
+  Seção "refresh":
+    [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},
+  
+  Seção "claim" - Parte 1 (entrega):
+    [1] = {itemId = 26731, count = 1},
+  
+  Seção "claim" - Parte 2 (resposta):
+    [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},
+
+PASSO 5: Salvar ambos os arquivos
+
+PASSO 6: Reiniciar o servidor e o cliente
+
+================================================================================
+EXEMPLO PRÁTICO
+================================================================================
+
+Vou mudar o Dia 1 de "Leaf Stone" para "Poção Vermelha" (ID: 12345)
+
+CLIENTE (game_daily_rewards.lua):
+  ANTES: [1] = {clientId = 26731, count = 1, name = "Leaf Stone"},
+  DEPOIS: [1] = {clientId = 12345, count = 1, name = "Poção Vermelha"},
+
+SERVIDOR (extendedopcode.lua) - Seção "refresh":
+  ANTES: [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},
+  DEPOIS: [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"},
+
+SERVIDOR (extendedopcode.lua) - Seção "claim" - Parte 1:
+  ANTES: [1] = {itemId = 26731, count = 1},
+  DEPOIS: [1] = {itemId = 12345, count = 1},
+
+SERVIDOR (extendedopcode.lua) - Seção "claim" - Parte 2:
+  ANTES: [1] = {itemId = 26731, count = 1, name = "Leaf Stone"},
+  DEPOIS: [1] = {itemId = 12345, count = 1, name = "Poção Vermelha"},
+
+================================================================================
+ITENS ATUAIS (21 DIAS)
+================================================================================
+
+Dia 1:  clientId = 26731 | itemId = 26731 | Leaf Stone
+Dia 2:  clientId = 26728 | itemId = 26728 | Fire Stone
+Dia 3:  clientId = 26736 | itemId = 26736 | Water Stone
+Dia 4:  clientId = 26734 | itemId = 26734 | Thunder Stone
+Dia 5:  clientId = 2152  | itemId = 2152  | Hundred Dollar x5
+Dia 6:  clientId = 27643 | itemId = 27643 | Great Potion x3
+Dia 7:  clientId = 26748 | itemId = 26748 | Sun Stone
+Dia 8:  clientId = 38787 | itemId = 38787 | Rare Candy x2
+Dia 9:  clientId = 2160  | itemId = 2160  | Ten Thousand Dollar
+Dia 10: clientId = 27641 | itemId = 27641 | Ultra Potion x2
+Dia 11: clientId = 26731 | itemId = 26731 | Leaf Stone x2
+Dia 12: clientId = 27645 | itemId = 27645 | Revive x3
+Dia 13: clientId = 2152  | itemId = 2152  | Hundred Dollar x10
+Dia 14: clientId = 26728 | itemId = 26728 | Fire Stone x2
+Dia 15: clientId = 38787 | itemId = 38787 | Rare Candy x3
+Dia 16: clientId = 26736 | itemId = 26736 | Water Stone x2
+Dia 17: clientId = 2160  | itemId = 2160  | Ten Thousand Dollar x2
+Dia 18: clientId = 27647 | itemId = 27647 | Hyper Potion x5
+Dia 19: clientId = 26734 | itemId = 26734 | Thunder Stone x2
+Dia 20: clientId = 38787 | itemId = 38787 | Rare Candy x5
+Dia 21: clientId = 2160  | itemId = 2160  | Ten Thousand Dollar x10
+
+================================================================================
+CHECKLIST ANTES DE SALVAR
+================================================================================
+
+□ Editei o CLIENTE (game_daily_rewards.lua)?
+□ Editei o SERVIDOR - Seção "refresh" (extendedopcode.lua)?
+□ Editei o SERVIDOR - Seção "claim" - Parte 1 (extendedopcode.lua)?
+□ Editei o SERVIDOR - Seção "claim" - Parte 2 (extendedopcode.lua)?
+□ Os IDs são iguais em todos os 4 lugares?
+□ A quantidade (count) está correta?
+□ Não há erros de sintaxe (vírgulas, chaves)?
+□ Salvei todos os arquivos?
+
+================================================================================
+NOTAS IMPORTANTES
+================================================================================
+
+1. SEMPRE edite em QUATRO lugares:
+   • Cliente: game_daily_rewards.lua
+   • Servidor: extendedopcode.lua (seção "refresh")
+   • Servidor: extendedopcode.lua (seção "claim" - Parte 1)
+   • Servidor: extendedopcode.lua (seção "claim" - Parte 2)
+
+2. Os IDs devem ser IGUAIS em todos os lugares
+
+3. Se editar apenas em alguns lugares, os itens não aparecerão corretamente
+
+4. Após editar, reinicie SERVIDOR e CLIENTE
+
+5. Se os itens ainda não aparecerem, verifique:
+   • Se os IDs são válidos no jogo
+   • Se não há erros de sintaxe
+   • Se salvou todos os arquivos
+
+================================================================================
+VERSÃO
+================================================================================
+
+Versão: 1.4.0
+Data: 14/03/2026
+Status: ✅ Guia completo de edição
+
+================================================================================
