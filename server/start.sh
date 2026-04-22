@@ -7,6 +7,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 mkdir -p logs backups
 
+TFS_BIN="./build/tfs"
+
 MYSQL_USER=
 MYSQL_PASS=
 MYSQL_DATABASE=
@@ -19,7 +21,7 @@ set -o pipefail
 while true        
 do
      #the antirollback_config file must be in the tfs folder
-    gdb --batch -return-child-result --command=antirollback_config --args ./tfs 2>&1 | awk '{ print strftime("%F %T - "), $0; fflush(); }' | tee "logs/$(date +"%F %H-%M-%S.log")"
+    gdb --batch -return-child-result --command=antirollback_config --args "$TFS_BIN" 2>&1 | awk '{ print strftime("%F %T - "), $0; fflush(); }' | tee "logs/$(date +"%F %H-%M-%S.log")"
 	mysqldump -u $MYSQL_USER -p$MYSQL_PASS $MYSQL_DATABASE > backups/$(date '+%Y-%m-%d_%H-%M').sql
 	
     if [ $? -eq 0 ]; then

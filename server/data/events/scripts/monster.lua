@@ -1,8 +1,10 @@
 function Monster:onSpawn(position, startup, artificial)
 	self:setRankIcon()
 
-	-- Wild Pokemon level randomization (only for wild, no master)
-	if not self:getMaster() and PokemonLevel and PokemonLevel.getWildLevelRange then
+	-- Randomize level only for natural wild spawns.
+	-- Artificial spawns created via Game.createMonster (e.g. /m, NPC scripts, audits)
+	-- must preserve the explicit level passed by the caller.
+	if not artificial and not self:getMaster() and PokemonLevel and PokemonLevel.getWildLevelRange then
 		local minLvl, maxLvl = PokemonLevel.getWildLevelRange(self:getName(), self:getType())
 		if minLvl and maxLvl and maxLvl >= minLvl then
 			self:setLevel(math.random(minLvl, maxLvl))

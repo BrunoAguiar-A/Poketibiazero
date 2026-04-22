@@ -6,6 +6,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 mkdir -p logs backups
 
+TFS_BIN="./build/tfs"
+
 LOCK_DIR="/tmp/start_protected_tfs.lock"
 if ! mkdir "$LOCK_DIR" 2>/dev/null; then
     echo "Ja existe uma instancia de start_protected.sh em execucao."
@@ -24,7 +26,7 @@ do
     LOG_FILE="logs/$(date +"%F %H-%M-%S.log")"
 
     # Inicia o servidor em background para pegar o PID
-    gdb --batch -return-child-result --command=antirollback_config --args ./tfs \
+    gdb --batch -return-child-result --command=antirollback_config --args "$TFS_BIN" \
         2>&1 | awk '{ print strftime("%F %T - "), $0; fflush(); }' | tee "$LOG_FILE" &
 
     SERVER_PID=$!

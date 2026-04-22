@@ -28,6 +28,7 @@
 #include "spells.h"
 #include "talkaction.h"
 #include "weapons.h"
+#include "luascript.h"
 
 #include "market.h"
 
@@ -46,6 +47,140 @@ extern Monsters g_monsters;
 extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
 extern Scripts* g_scripts;
+extern LuaEnvironment g_luaEnvironment;
+
+namespace {
+uint32_t resolvePokemonAttackBaseFromLua(const std::string& monsterName, CombatType_t combatType)
+{
+	lua_State* luaState = g_luaEnvironment.getLuaState();
+	if (!luaState || !LuaScriptInterface::reserveScriptEnv()) {
+		return 0;
+	}
+
+	ScriptEnvironment* env = LuaScriptInterface::getScriptEnv();
+	env->setScriptId(0, &g_luaEnvironment);
+
+	const int32_t stackTop = lua_gettop(luaState);
+	uint32_t resolvedBase = 0;
+	const auto cleanup = [&]() {
+		lua_settop(luaState, stackTop);
+		LuaScriptInterface::resetScriptEnv();
+	};
+
+	lua_getglobal(luaState, "PokemonLevel");
+	if (!lua_istable(luaState, -1)) {
+		cleanup();
+		return 0;
+	}
+
+	std::string damageCategory = "special";
+	lua_getfield(luaState, -1, "getDamageCategory");
+	if (lua_isfunction(luaState, -1)) {
+		LuaScriptInterface::pushString(luaState, getCombatName(combatType));
+		if (LuaScriptInterface::protectedCall(luaState, 1, 1) != 0) {
+			LuaScriptInterface::reportError(__FUNCTION__, LuaScriptInterface::popString(luaState));
+			cleanup();
+			return 0;
+		}
+
+		damageCategory = LuaScriptInterface::popString(luaState);
+	} else {
+		lua_pop(luaState, 1);
+	}
+
+	lua_getfield(luaState, -1, "getCombatBaseStats");
+	if (!lua_isfunction(luaState, -1)) {
+		lua_pop(luaState, 1);
+		cleanup();
+		return 0;
+	}
+
+	LuaScriptInterface::pushString(luaState, monsterName);
+	lua_pushnil(luaState);
+	if (LuaScriptInterface::protectedCall(luaState, 2, 1) != 0) {
+		LuaScriptInterface::reportError(__FUNCTION__, LuaScriptInterface::popString(luaState));
+		cleanup();
+		return 0;
+	}
+
+	if (lua_istable(luaState, -1)) {
+		lua_getfield(luaState, -1, damageCategory == "physical" ? "atk" : "spatk");
+		resolvedBase = std::max<uint32_t>(1, LuaScriptInterface::getNumber<uint32_t>(luaState, -1));
+		lua_pop(luaState, 1);
+	}
+
+	cleanup();
+	return resolvedBase;
+}
+
+void emitManualRuntimeAppliedTrace(Creature* target, Creature* attacker, const CombatDamage& damage, int64_t damageAppliedByCore,
+	int64_t targetHealthBefore, int64_t targetHealthAfter, int64_t hpDeltaReal)
+{
+	if (!target || !attacker) {
+		return;
+	}
+
+	Monster* attackerMonster = attacker->getMonster();
+	if (!attackerMonster) {
+		return;
+	}
+
+	Creature* attackerMaster = attackerMonster->getMaster();
+	if (!attackerMaster) {
+		return;
+	}
+
+	lua_State* luaState = g_luaEnvironment.getLuaState();
+	if (!luaState || !LuaScriptInterface::reserveScriptEnv()) {
+		return;
+	}
+
+	ScriptEnvironment* env = LuaScriptInterface::getScriptEnv();
+	env->setScriptId(0, &g_luaEnvironment);
+
+	const int32_t stackTop = lua_gettop(luaState);
+	const auto cleanup = [&]() {
+		lua_settop(luaState, stackTop);
+		LuaScriptInterface::resetScriptEnv();
+	};
+
+	lua_getglobal(luaState, "ManualRuntimeTrace");
+	if (!lua_istable(luaState, -1)) {
+		cleanup();
+		return;
+	}
+
+	lua_getfield(luaState, -1, "captureAppliedDamage");
+	if (!lua_isfunction(luaState, -1)) {
+		cleanup();
+		return;
+	}
+	lua_remove(luaState, -2);
+
+	LuaScriptInterface::pushUserdata(luaState, target);
+	LuaScriptInterface::setCreatureMetatable(luaState, -1, target);
+	LuaScriptInterface::pushUserdata(luaState, attacker);
+	LuaScriptInterface::setCreatureMetatable(luaState, -1, attacker);
+	lua_pushnumber(luaState, damage.primary.type);
+	LuaScriptInterface::pushString(luaState, damage.spellName);
+	lua_pushnumber(luaState, damage.traceOriginalOrigin);
+	lua_pushnumber(luaState, damage.traceRawPrimaryValue);
+	lua_pushnumber(luaState, damage.tracePostLuaPrimaryValue);
+	lua_pushnumber(luaState, damageAppliedByCore);
+	lua_pushnumber(luaState, targetHealthBefore);
+	lua_pushnumber(luaState, targetHealthAfter);
+	lua_pushnumber(luaState, hpDeltaReal);
+
+	if (LuaScriptInterface::protectedCall(luaState, 11, 1) != 0) {
+		LuaScriptInterface::reportError(__FUNCTION__, LuaScriptInterface::popString(luaState));
+		cleanup();
+		return;
+	}
+
+	lua_pop(luaState, 1);
+	cleanup();
+}
+}
 
 Game::Game()
 {
@@ -4293,10 +4428,16 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			return false;
 		}
 		damage.primary.value = std::abs(damage.primary.value);
-		if (attacker) {
-			bool isWild = true;
-			std::string spellName = damage.spellName;
-			int64_t power = 0;
+		if (damage.traceOriginalOrigin == ORIGIN_NONE) {
+			damage.traceOriginalOrigin = damage.origin;
+		}
+		const bool isPostLuaHealthChangePass = damage.origin == ORIGIN_NONE && damage.traceOriginalOrigin != ORIGIN_NONE;
+		if (attacker && !isPostLuaHealthChangePass) {
+				bool isWild = true;
+				std::string spellName = damage.spellName;
+				int64_t originalPower = std::abs(damage.primary.value);
+				int64_t power = originalPower;
+				bool hasComputedPower = false;
 
 			Monster* pokemon = attacker->getMonster();
 			if (!pokemon)
@@ -4311,57 +4452,81 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 						isWild = false;
 
 
-					power = monsterType->getSpellPower(spellName, isWild);
-
-					uint32_t pokemonMagicAttack = monsterType->info.moveMagicAttackBase;
-					float bonus = (1.0); // statusGainFormula C++
-
-					if (!isWild) {
-						Player* master = pokemon->getMaster()->getPlayer();
-						uint16_t elementalBuff = master->getElementalBuff(damage.primary.type);
-
-						if (elementalBuff > 0) {
-							bonus += elementalBuff / 100.0;
+						int64_t spellPower = monsterType->getSpellPower(spellName, isWild);
+						uint32_t pokemonMagicAttack = resolvePokemonAttackBaseFromLua(pokemon->getName(), damage.primary.type);
+						if (pokemonMagicAttack == 0) {
+							pokemonMagicAttack = std::max<int32_t>(1, monsterType->info.moveMagicAttackBase);
 						}
-						uint32_t playerLevel = master->getLevel();
-						power *= pokemonMagicAttack * bonus; // magic atk calculo + bonus <old formula>
-						power += power * ((playerLevel * 1.55) / 100); // bonus level player
-						Item* pokeball = master->getUsingPokeball();
-						if (pokeball) {
-							int8_t pokeBoost = pokeball->getPokemonBoost();
-							power += power * ((pokeBoost * 3.0) / 100); // bonus boost
-							uint16_t heldX = pokeball->getIntAttr(ITEM_ATTRIBUTE_HELDX);
-							if (mapHeldAttack.find(heldX) != mapHeldAttack.end()) {
-								double bonusMultiplier = mapHeldAttack[heldX] / 100.0;
-								power += power * bonusMultiplier;
+						float bonus = (1.0); // statusGainFormula C++
+
+						if (spellPower > 0) {
+							hasComputedPower = true;
+							power = spellPower * (pokemonMagicAttack * bonus);
+						}
+
+						if (!isWild) {
+							Player* master = pokemon->getMaster()->getPlayer();
+							uint16_t elementalBuff = master->getElementalBuff(damage.primary.type);
+
+							if (elementalBuff > 0) {
+								bonus += elementalBuff / 100.0;
+							}
+							if (spellPower > 0) {
+								power = spellPower * (pokemonMagicAttack * bonus);
+							}
+							Item* pokeball = master->getUsingPokeball();
+							if (pokeball && spellPower > 0) {
+								uint16_t heldX = pokeball->getIntAttr(ITEM_ATTRIBUTE_HELDX);
+								if (mapHeldAttack.find(heldX) != mapHeldAttack.end()) {
+									double bonusMultiplier = mapHeldAttack[heldX] / 100.0;
+									power += std::round(power * bonusMultiplier);
+								}
 							}
 						}
-					}
-					else {
-						power *= (pokemonMagicAttack * bonus);
-					}
-					if (target->getMonster() && damage.primary.type != COMBAT_HEALING) {
-						MonsterType* monsterTypeTarget = g_monsters.getMonsterType(target->getName());
-						RaceType_t firstRaceTarget = monsterTypeTarget->info.race;
-						RaceType_t secondRaceTarget = monsterTypeTarget->info.race2;
-						double multiplier = calculateDamageMultiplier(combatToRace(damage.primary.type), firstRaceTarget, secondRaceTarget);
-						power *= multiplier;
-					}
-					if (!isWild) {
-						if (damage.primary.type != COMBAT_HEALING && damage.origin != ORIGIN_RETURN) {
-							if (Guild* guild = (attacker->getPlayer() ? attacker->getPlayer() : attacker->getMaster()->getPlayer())->getGuild()) {
-								if (guild->hasBuff(COLUMN_1, ATTACK_BUFF)) {
-									power += std::round(power * (GUILD_BUFF_ATTACK / 100.));
+						else if (spellPower > 0) {
+							power = spellPower * (pokemonMagicAttack * bonus);
+						}
+						if (spellPower > 0 && damage.primary.type != COMBAT_HEALING) {
+							const auto resolveAttackRace = [&]() {
+								RaceType_t attackRace = combatToRace(damage.primary.type);
+								if (attackRace == RACE_NONE && damage.origin == ORIGIN_MELEE && spellName == "melee") {
+									attackRace = pokemon->getRace();
+									if (attackRace == RACE_NONE) {
+										attackRace = pokemon->getRace2();
+									}
+								}
+								return attackRace;
+							};
+
+							RaceType_t attackRace = resolveAttackRace();
+							if (attackRace != RACE_NONE && (attackRace == pokemon->getRace() || attackRace == pokemon->getRace2())) {
+								// STAB de 50% estava empurrando demais o burst geral.
+								power += std::round(power * 0.35);
+							}
+
+							if (target->getMonster()) {
+								MonsterType* monsterTypeTarget = g_monsters.getMonsterType(target->getName());
+								RaceType_t firstRaceTarget = monsterTypeTarget->info.race;
+								RaceType_t secondRaceTarget = monsterTypeTarget->info.race2;
+								double multiplier = calculateDamageMultiplier(attackRace, firstRaceTarget, secondRaceTarget);
+								power *= multiplier;
+							}
+						}
+						if (!isWild && spellPower > 0) {
+							if (damage.primary.type != COMBAT_HEALING && damage.origin != ORIGIN_RETURN) {
+								if (Guild* guild = (attacker->getPlayer() ? attacker->getPlayer() : attacker->getMaster()->getPlayer())->getGuild()) {
+									if (guild->hasBuff(COLUMN_1, ATTACK_BUFF)) {
+										power += std::round(power * (GUILD_BUFF_ATTACK / 100.));
+									}
 								}
 							}
 						}
 					}
 				}
-			}
 
-			if (damage.origin != ORIGIN_RETURN) {
-				damage.primary.value = power;
-			}
+				if (damage.origin != ORIGIN_RETURN && hasComputedPower) {
+					damage.primary.value = power;
+				}
 
 			if (pokemon->hasCondition(CONDITION_MELEE_RAGE) && damage.origin == ORIGIN_MELEE) {
 				damage.primary.value *= 2;
@@ -4473,6 +4638,9 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		}
 
 		if (damage.origin != ORIGIN_NONE) {
+			if (damage.traceRawPrimaryValue == 0) {
+				damage.traceRawPrimaryValue = damage.primary.value;
+			}
 			const auto& events = target->getCreatureEvents(CREATURE_EVENT_HEALTHCHANGE);
 			if (!events.empty()) {
 				for (CreatureEvent* creatureEvent : events) {
@@ -4481,6 +4649,13 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 				damage.origin = ORIGIN_NONE;
 				return combatChangeHealth(attacker, target, damage);
 			}
+		}
+
+		if (damage.traceRawPrimaryValue == 0) {
+			damage.traceRawPrimaryValue = damage.primary.value;
+		}
+		if (damage.tracePostLuaPrimaryValue == 0) {
+			damage.tracePostLuaPrimaryValue = damage.primary.value;
 		}
 
 		int64_t targetHealth = target->getHealth();
@@ -4586,7 +4761,11 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			}
 		}
 
+		const int64_t targetHealthBeforeDrain = target->getHealth();
 		target->drainHealth(attacker, realDamage);
+		const int64_t targetHealthAfterDrain = target->getHealth();
+		const int64_t hpDeltaReal = targetHealthBeforeDrain - targetHealthAfterDrain;
+		emitManualRuntimeAppliedTrace(target, attacker, damage, realDamage, targetHealthBeforeDrain, targetHealthAfterDrain, hpDeltaReal);
 		addCreatureHealth(spectators, target);
 	}
 
